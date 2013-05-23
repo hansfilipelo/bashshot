@@ -54,6 +54,12 @@ echo "------------------------"
 #cat $TEMP | mailx -s "bashshot.sh reporting for duty" logs@cyd.liu.se
 
 # Appends stuff in TEMP/mail to log
-cat $TEMP >> $LOG
-rm $TEMP
 
+# Write to log once a week and every month
+if [ $PERIOD == "weekly" -o $PERIOD == "monthly" ]
+then 
+	cat $TMP >> $LOG
+fi
+
+#Removes temporary files
+rm $TEMP

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# If something fails - exit
+set -e
+
 # Sets hour of day to snapshot
 echo ""
 echo "Enter hour of day to take daily, weekly and monthly snapshots:"
@@ -35,7 +38,7 @@ FILESYSTEMS=/etc/bashshot/filesystems.list
 touch $FILESYSTEMS
 
 FS=1
-while [ -z $FS ]
+for [ -n $FS ]
 do
 	echo ""
 	echo "Enter a filesystem to snapshot - leave empty when you entered all filesystems:"
@@ -98,6 +101,7 @@ then
 	echo ""
 else
 	echo "Install failed - invalid install type."
+	exit
 fi
 
 # Sets crontab

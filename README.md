@@ -25,6 +25,12 @@ Create the file /etc/bashshot/filesystems.list and enter filesystems following s
 	pool/filesystem2/children
 
 
+UNINSTALL
+=================================
+Run uninstall.sh
+	./uninstall.sh
+
+
 REQUIREMENTS
 =================================
 Should run on any *NIX system that has crontab and ZFS installed. 
@@ -34,4 +40,3 @@ KNOWN ISSUES
 =================================
 - Installer doesn't yet install config-file. 
 - Removes ALL frequent snapshots at midnight
-- Uninstaller is not yet implemented

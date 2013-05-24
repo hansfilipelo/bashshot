@@ -28,6 +28,7 @@ Create the file /etc/bashshot/filesystems.list and enter filesystems following s
 UNINSTALL
 =================================
 Run uninstall.sh
+
 	./uninstall.sh
 
 

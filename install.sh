@@ -108,3 +108,5 @@ fi
 crontab $CRONTAB
 rm $CRONTAB
 
+echo ""
+echo "Installed bashShot succesfully!"

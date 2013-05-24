@@ -5,13 +5,15 @@ set -e
 
 # Sets hour of day to snapshot
 echo ""
-echo "Enter hour of day to take daily, weekly and monthly snapshots:"
+echo "Enter hour of day (two digits, i e 03 for 3 am) to take daily, weekly and monthly snapshots:"
+echo "----------------------"
 read HOUR
 
 # Sets installmode
 echo ""
 echo "Enter options for installation or leave empty for default. Available options are:"
 echo "	nofrequently	nodaily"
+echo "----------------------"
 read INSTALLTYPE
 
 if [ -z $INSTALLTYPE ]
@@ -37,15 +39,25 @@ mkdir -p /etc/bashshot
 FILESYSTEMS=/etc/bashshot/filesystems.list
 touch $FILESYSTEMS
 
-FS=1
-for [ -n $FS ]
+echo ""
+echo 'Enter a filesystem to snapshot - write "done" without quotation marks when finished:'
+echo "----------------------"
+while read FS
 do
-	echo ""
-	echo "Enter a filesystem to snapshot - leave empty when you entered all filesystems:"
-	read FS
-	if [ -n $FS ]
+	if [ $FS == "done" ]
 	then
+		break
+	else
 		echo $FS >> $FILESYSTEMS
+		echo ""
+		echo "Filesystems added to bashShot config file:"
+		while read line
+		do
+			echo $line
+		done < $FILESYSTEMS
+		echo ""
+		echo 'Enter a filesystem to snapshot (i e "pool/filesystem/optional children") - write "done" without quotation marks when finished:'
+		echo "----------------------"	
 	fi
 done
 
@@ -55,6 +67,8 @@ done
 CRONTAB=$DIR/mycron
 crontab -l > $CRONTAB
 
+echo ""
+echo "----------------------"
 echo "Bashshot will run at:"
 echo "$HOUR:10 for daily,"
 echo "$HOUR:15 for weekly,"
@@ -100,6 +114,7 @@ then
 	echo "55 $HOUR 1 * * /usr/bin/bashshot_cleaner.sh monthly" >> $CRONTAB
 	echo ""
 else
+	echo ""
 	echo "Install failed - invalid install type."
 	exit
 fi

@@ -12,4 +12,4 @@ rm /usr/bin/bashshot.sh
 rm /usr/bin/bashshot_cleaner.sh
 
 # Removes configuration
-rm -r /etc/basshot
+rm -r /etc/bashshot

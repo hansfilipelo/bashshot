@@ -15,14 +15,9 @@ Clone project, cd to folder:
 	git clone git://github.com/hansfilipelo/bashshot.git
 	cd bashshot
 
-Run install.sh: 
+Run install.sh and follow the on screen instructions: 
 
 	./install.sh
-
-Create the file /etc/bashshot/filesystems.list and enter filesystems following standard below: 
-
-	pool/filesystem1
-	pool/filesystem2/children
 
 
 UNINSTALL
@@ -36,7 +31,3 @@ REQUIREMENTS
 =================================
 Should run on any *NIX system that has crontab and ZFS installed. 
 
-
-KNOWN ISSUES
-=================================
-- Installer doesn't yet install config-file. 

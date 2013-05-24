@@ -43,7 +43,12 @@ DATE=$(date +%Y%m%d%H%M)
 if [ $PERIOD == frequently ]
 then
 	# We keep frequently snapshots for an hour
-	TIMEDIFF=100
+	if [ $(date +%H) == 00 ]
+	then
+		TIMEDIFF=7700
+	else
+		TIMEDIFF=100
+	fi
 
 elif [ $PERIOD == hourly ]
 then

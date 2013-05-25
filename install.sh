@@ -40,7 +40,7 @@ FILESYSTEMS=/etc/bashshot/filesystems.list
 touch $FILESYSTEMS
 
 echo ""
-echo 'Enter a filesystem to snapshot - write "done" without quotation marks when finished:'
+echo 'Enter a filesystem to snapshot (i e "pool/filesystem") - write "done" without quotation marks when finished:'
 echo "----------------------"
 while read FS
 do
@@ -56,7 +56,7 @@ do
 			echo $line
 		done < $FILESYSTEMS
 		echo ""
-		echo 'Enter a filesystem to snapshot (i e "pool/filesystem/optional children") - write "done" without quotation marks when finished:'
+		echo 'Enter a filesystem to snapshot (i e "pool/filesystem") - write "done" without quotation marks when finished:'
 		echo "----------------------"	
 	fi
 done

@@ -9,6 +9,31 @@ echo "Enter hour of day (two digits, i e 03 for 3 am) to take daily, weekly and 
 echo "----------------------"
 read HOUR
 
+#---------------------------------------------------------
+
+MINUTE=banan
+# Sets minute of hour for when to start take daily, weekly and monthly
+echo ""
+echo "Enter minute of hour (two digits, i e 03 for 3 am) to take daily, weekly and monthly snapshots. Do not enter 00,15,30 or 45 since frequent snapshots run at that time."
+echo "----------------------"
+while read MINUTE
+do
+	if [ -z $MINUTE ]
+	then
+		echo ""
+		echo "Enter minute of hour (two digits, i e 03 for 3 am) to take daily, weekly and monthly snapshots. Do not enter 00,15,30 or 45 since frequent snapshots run at that time."
+		echo "----------------------"
+	elif [ $MINUTE -eq 00 -o $MINUTE -eq 15 -o $MINUTE -eq 30 -o $MINUTE -eq 45 ]
+	then
+		echo ""
+		echo "You can't take daily, weekly and monthly snapshot at the same time as frequent."
+	else
+		break
+	fi
+done
+
+#---------------------------------------------------------
+
 # Sets installmode
 echo ""
 echo "Enter options for installation or leave empty for default. Available options are:"
@@ -21,7 +46,7 @@ then
 	INSTALLTYPE=default
 fi
 
-# Sets flag for install 
+#--------------------------------------------------------- 
 
 # cd to script dir
 DIR=$( cd "$( dirname "$0" )" && pwd )
@@ -31,7 +56,7 @@ cd $DIR
 cp $DIR/bashshot.sh /usr/bin/
 cp $DIR/bashshot_cleaner.sh /usr/bin/
 
-# -----------------------------------------
+#---------------------------------------------------------
 # Creates configfolder
 mkdir -p /etc/bashshot
 
@@ -44,7 +69,10 @@ echo 'Enter a filesystem to snapshot (i e "pool/filesystem") - write "done" with
 echo "----------------------"
 while read FS
 do
-	if [ $FS == "done" ]
+	if [ -z $FS ]
+	then
+		break
+	elif [ $FS == done ]
 	then
 		break
 	else
@@ -61,7 +89,7 @@ do
 	fi
 done
 
-# -----------------------------------------
+#---------------------------------------------------------
 
 # Gets crontab
 CRONTAB=$DIR/mycron
@@ -79,23 +107,23 @@ then
 	echo "No frequent (frequently+hourly) snapshots will be taken)."
 	echo "" >> $CRONTAB
 	echo "# Bashshot - Solaris time-slider-like functionality for GNU/Linux implemented in bash" >> $CRONTAB
-	echo "10 $HOUR * * * /usr/bin/bashshot.sh daily" >> $CRONTAB
-	echo "15 $HOUR * * 0 /usr/bin/bashshot.sh weekly" >> $CRONTAB
-	echo "20 $HOUR 1 * * /usr/bin/bashshot.sh monthly" >> $CRONTAB
+	echo "$MINUTE $HOUR * * * /usr/bin/bashshot.sh daily" >> $CRONTAB
+	echo "$(($MINUTE+1)) $HOUR * * 0 /usr/bin/bashshot.sh weekly" >> $CRONTAB
+	echo "$((MINUTE+2)) $HOUR 1 * * /usr/bin/bashshot.sh monthly" >> $CRONTAB
 	echo "# Cleaner scripts" >> $CRONTAB
-	echo "40 $HOUR * * * /usr/bin/bashshot_cleaner.sh daily" >> $CRONTAB
-	echo "50 $HOUR * * 0 /usr/bin/bashshot_cleaner.sh weekly" >> $CRONTAB
-	echo "55 $HOUR 1 * * /usr/bin/bashshot_cleaner.sh monthly" >> $CRONTAB
+	echo "$((MINUTE+3)) $HOUR * * * /usr/bin/bashshot_cleaner.sh daily" >> $CRONTAB
+	echo "$((MINUTE+4)) $HOUR * * 0 /usr/bin/bashshot_cleaner.sh weekly" >> $CRONTAB
+	echo "$((MINUTE+5)) $HOUR 1 * * /usr/bin/bashshot_cleaner.sh monthly" >> $CRONTAB
 	echo ""
 elif [ $INSTALLTYPE == nodaily ]
 then
 	echo "No daily (frequently+hourly+daily) snapshots will be taken."
 	echo "# Bashshot - Solaris time-slider-like functionality for GNU/Linux implemented in bash" >> $CRONTAB
-	echo "15 $HOUR * * 0 /usr/bin/bashshot.sh weekly" >> $CRONTAB
-	echo "20 $HOUR 1 * * /usr/bin/bashshot.sh monthly" >> $CRONTAB
+	echo "$MINUTE $HOUR * * 0 /usr/bin/bashshot.sh weekly" >> $CRONTAB
+	echo "$((MINUTE+1)) $HOUR 1 * * /usr/bin/bashshot.sh monthly" >> $CRONTAB
 	echo "# Cleaner scripts" >> $CRONTAB
-	echo "50 $HOUR * * 0 /usr/bin/bashshot_cleaner.sh weekly" >> $CRONTAB
-	echo "55 $HOUR 1 * * /usr/bin/bashshot_cleaner.sh monthly" >> $CRONTAB
+	echo "$((MINUTE+2)) $HOUR * * 0 /usr/bin/bashshot_cleaner.sh weekly" >> $CRONTAB
+	echo "$((MINUTE+3)) $HOUR 1 * * /usr/bin/bashshot_cleaner.sh monthly" >> $CRONTAB
 	echo ""
 elif [ $INSTALLTYPE == default ]
 then
@@ -103,15 +131,15 @@ then
 	echo "# Bashshot - Solaris time-slider-like functionality for GNU/Linux implemented in bash" >> $CRONTAB
 	echo "0,15,30,45 * * * * /usr/bin/bashshot.sh frequently" >> $CRONTAB
 	echo "5 * * * * /usr/bin/bashshot.sh hourly" >> $CRONTAB
-	echo "10 $HOUR * * * /usr/bin/bashshot.sh daily" >> $CRONTAB
-	echo "15 $HOUR * * 0 /usr/bin/bashshot.sh weekly" >> $CRONTAB
-	echo "20 $HOUR 1 * * /usr/bin/bashshot.sh monthly" >> $CRONTAB
+	echo "$MINUTE $HOUR * * * /usr/bin/bashshot.sh daily" >> $CRONTAB
+	echo "$((MINUTE+1)) $HOUR * * 0 /usr/bin/bashshot.sh weekly" >> $CRONTAB
+	echo "$((MINUTE+2)) $HOUR 1 * * /usr/bin/bashshot.sh monthly" >> $CRONTAB
 	echo "# Cleaner scripts" >> $CRONTAB
 	echo "1,16,31,46 * * * * /usr/bin/bashshot_cleaner.sh frequently" >> $CRONTAB
-	echo "6 * * * * /usr/bin/bashshot_cleaner.sh hourly" >> $CRONTAB
-	echo "40 $HOUR * * * /usr/bin/bashshot_cleaner.sh daily" >> $CRONTAB
-	echo "50 $HOUR * * 0 /usr/bin/bashshot_cleaner.sh weekly" >> $CRONTAB
-	echo "55 $HOUR 1 * * /usr/bin/bashshot_cleaner.sh monthly" >> $CRONTAB
+	echo "$((MINUTE+3)) * * * * /usr/bin/bashshot_cleaner.sh hourly" >> $CRONTAB
+	echo "$((MINUTE+4)) $HOUR * * * /usr/bin/bashshot_cleaner.sh daily" >> $CRONTAB
+	echo "$((MINUTE+5)) $HOUR * * 0 /usr/bin/bashshot_cleaner.sh weekly" >> $CRONTAB
+	echo "$((MINUTE+6)) $HOUR 1 * * /usr/bin/bashshot_cleaner.sh monthly" >> $CRONTAB
 	echo ""
 else
 	echo ""
@@ -122,6 +150,8 @@ fi
 # Sets crontab
 crontab $CRONTAB
 rm $CRONTAB
+
+#---------------------------------------------------------
 
 echo ""
 echo "Installed bashShot succesfully!"

@@ -58,13 +58,23 @@ then
 elif [ $PERIOD == daily ]
 then
 	# We keep daily snapshots for a week
-	TIMEDIFF=70000
-
+	if [ 8 -gt $(date +%d) ]
+	then
+		TIMEDIFF=750000
+	else
+		TIMEDIFF=70000
+	fi
+	
 elif [ $PERIOD == weekly ]
 then
 	# We keep weekly snapshots for a month
-	TIMEDIFF=1000000
-
+	if [ 2 -gt $(date +%m) ]
+	then
+		TIMEDIFF=89700000
+	else
+		TIMEDIFF=1000000
+	fi
+	
 elif [ $PERIOD == monthly ]
 then
 	# We keep monthly snapshots for a year

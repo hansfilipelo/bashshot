@@ -16,7 +16,7 @@ date "+%Y-%m-%d %H:%M"
 DIR=$( cd "$( dirname "$0" )" && pwd )
 cd $DIR
 
-# Put log in same dir as script
+# Put log /var/log/
 LOG=/var/log/bashshot.log
 touch $LOG
 

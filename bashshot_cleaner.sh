@@ -7,6 +7,9 @@ exec >> $TMP 2>&1
 SNAPSHOTS=/tmp/snapshots_tmp.txt
 touch $SNAPSHOTS
 
+# Path to ZFS
+ZFS=/sbin/zfs
+
 echo ""
 echo "Written by bashshot_cleaner.sh"
 echo "-----------------------------"
@@ -92,7 +95,7 @@ else
 fi
 
 # Lists snapshots taken with same interval as cleaner
-/sbin/zfs list -t snapshot | tail -n+2 | grep @$PERIOD > $SNAPSHOTS
+$ZFS list -t snapshot | tail -n+2 | grep @$PERIOD > $SNAPSHOTS
 
 while read line
 do
@@ -107,7 +110,7 @@ do
 	DIFF=$(($DATE-$SSDATE-$TIMEDIFF))
 	if [ $DIFF -gt 0 ]
 	then
-		/sbin/zfs destroy $SS
+		$ZFS destroy $SS
 		if [ $? == 0 ]
 		then
 			echo "$SS destroyed"
@@ -118,7 +121,7 @@ done < $SNAPSHOTS
 # List remaining snapshots
 echo ""
 echo "Remaining snapshots"
-/sbin/zfs list -t snapshot
+$ZFS list -t snapshot
 
 echo "-----------------------------"
 

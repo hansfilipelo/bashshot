@@ -4,6 +4,9 @@
 DIR=$( cd "$( dirname "$0" )" && pwd )
 cd $DIR
 
+# Path to ZFS
+ZFS=/sbin/zfs
+
 # Gets date and filesystems (FS) from FS file
 FILESYSTEMS=/etc/bashshot/filesystems.list
 DATE=$(date +%Y%m%d%H%M)
@@ -38,7 +41,7 @@ date "+%Y-%m-%d %H:%M"
 # Loops through FS to snapshot
 while read FS
 do
-	/sbin/zfs snapshot $FS@$PERIOD-$DATE
+	$ZFS snapshot $FS@$PERIOD-$DATE
 	
 	if [ $? == 0 ]
 	then

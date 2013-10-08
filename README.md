@@ -29,5 +29,5 @@ Run uninstall.sh
 
 REQUIREMENTS
 =================================
-Should run on any *NIX system that has crontab and ZFS installed. 
+Should run on any *NIX system that has crontab and ZFS (zfsonlinux.org) installed. 
 

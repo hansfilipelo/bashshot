@@ -21,7 +21,7 @@ do
 	if [ -z $MINUTE ]
 	then
 		echo ""
-		echo "Enter minute of hour (two digits, i e 03 for 3 am) to take daily, weekly and monthly snapshots. Do not enter 00,15,30 or 45 since frequent snapshots run at that time."
+		echo "Enter minute of hour (two digits, i e 03 $HOUR:03) to take daily, weekly and monthly snapshots. 
 		echo "----------------------"
 	elif [ $MINUTE -eq 00 -o $MINUTE -eq 15 -o $MINUTE -eq 30 -o $MINUTE -eq 45 ]
 	then

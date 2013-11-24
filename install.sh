@@ -21,7 +21,7 @@ do
 	if [ -z $MINUTE ]
 	then
 		echo ""
-		echo "Enter minute of hour (two digits, i e 03 for HOUR:03) to take daily, weekly and monthly snapshots.
+		echo "Enter minute of hour \(two digits, i e 03 for HOUR:03\) to take daily, weekly and monthly snapshots."
 		echo "----------------------"
 	else
 		break
@@ -37,9 +37,12 @@ echo "	nofrequently	nodaily"
 echo "----------------------"
 read INSTALLTYPE
 
-if [ -z $INSTALLTYPE ]
+if [ "nofrequently" != "$INSTALLTYPE" ]
 then
 	INSTALLTYPE=default
+elif [ "nodaily" != "$INSTALLTYPE" ]
+then
+	INSTALLTYPE="default"
 fi
 
 #--------------------------------------------------------- 
@@ -110,7 +113,7 @@ cat $DIR/logrotate.txt > /etc/logrotate.d/bashshot
 
 if [ $INSTALLTYPE == nofrequently ]
 then
-	echo "No frequent (frequently+hourly) snapshots will be taken."
+	echo "No frequent \(frequently+hourly\) snapshots will be taken."
 	echo "" >> $CRONTAB
 	echo "# Bashshot - Solaris time-slider-like functionality for GNU/Linux implemented in bash" >> $CRONTAB
 	echo "$MINUTE $HOUR * * * /usr/bin/bashshot.sh daily" >> $CRONTAB
@@ -123,7 +126,7 @@ then
 	echo ""
 elif [ $INSTALLTYPE == nodaily ]
 then
-	echo "No daily (frequently+hourly+daily) snapshots will be taken."
+	echo "No daily \(frequently+hourly+daily\) snapshots will be taken."
 	echo "# Bashshot - Solaris time-slider-like functionality for GNU/Linux implemented in bash" >> $CRONTAB
 	echo "$MINUTE $HOUR * * 0 /usr/bin/bashshot.sh weekly" >> $CRONTAB
 	echo "$((MINUTE+1)) $HOUR 1 * * /usr/bin/bashshot.sh monthly" >> $CRONTAB

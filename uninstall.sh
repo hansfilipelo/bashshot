@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 # Removes bashShot from crontab
 MYCRON=/tmp/mycron.txt
 (crontab -l | grep -iv bashshot | grep -iv "cleaner scripts") > $MYCRON
@@ -16,3 +14,4 @@ rm -r /etc/bashshot
 
 # Removes file for log rotation
 rm /etc/logrotate.d/bashshot
+

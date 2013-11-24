@@ -110,7 +110,7 @@ cat $DIR/logrotate.txt > /etc/logrotate.d/bashshot
 
 if [ $INSTALLTYPE == nofrequently ]
 then
-	echo "No frequent (frequently+hourly) snapshots will be taken)."
+	echo "No frequent (frequently+hourly) snapshots will be taken."
 	echo "" >> $CRONTAB
 	echo "# Bashshot - Solaris time-slider-like functionality for GNU/Linux implemented in bash" >> $CRONTAB
 	echo "$MINUTE $HOUR * * * /usr/bin/bashshot.sh daily" >> $CRONTAB

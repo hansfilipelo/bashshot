@@ -21,12 +21,8 @@ do
 	if [ -z $MINUTE ]
 	then
 		echo ""
-		echo "Enter minute of hour (two digits, i e 03 $HOUR:03) to take daily, weekly and monthly snapshots. 
+		echo "Enter minute of hour (two digits, i e 03 $(echo $HOUR):03) to take daily, weekly and monthly snapshots.
 		echo "----------------------"
-	elif [ $MINUTE -eq 00 -o $MINUTE -eq 15 -o $MINUTE -eq 30 -o $MINUTE -eq 45 ]
-	then
-		echo ""
-		echo "You can't take daily, weekly and monthly snapshot at the same time as frequent."
 	else
 		break
 	fi

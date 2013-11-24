@@ -13,3 +13,6 @@ rm /usr/bin/bashshot_cleaner.sh
 
 # Removes configuration
 rm -r /etc/bashshot
+
+# Removes file for log rotation
+rm /etc/logrotate.d/bashshot

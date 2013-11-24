@@ -102,6 +102,16 @@ echo "$HOUR:10 for daily,"
 echo "$HOUR:15 for weekly,"
 echo "and $HOUR:20 for monthly snapshots"
 
+# --------------------------
+
+# Installing logrotate for /var/log/bashshot.log
+touch /var/log/bashshot.log
+touch /etc/logrotate.d/bashshot
+
+cat $DIR/logrotate.txt > /etc/logrotate.d/bashshot
+
+# --------------------------
+
 if [ $INSTALLTYPE == nofrequently ]
 then
 	echo "No frequent (frequently+hourly) snapshots will be taken)."

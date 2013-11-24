@@ -21,7 +21,7 @@ do
 	if [ -z $MINUTE ]
 	then
 		echo ""
-		echo "Enter minute of hour (two digits, i e 03 $(echo $HOUR):03) to take daily, weekly and monthly snapshots.
+		echo "Enter minute of hour (two digits, i e 03 for HOUR:03) to take daily, weekly and monthly snapshots.
 		echo "----------------------"
 	else
 		break

@@ -11,7 +11,7 @@ DIR=$( cd "$( dirname "$0" )" && pwd )
 cd $DIR
 
 # Check if root
-if [[ whoami != 'root' ]]; then
+if [[ whoami != "root" ]]; then
 	echo "Must be root to run this installer."
 	exit 1;
 fi

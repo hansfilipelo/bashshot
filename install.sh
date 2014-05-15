@@ -4,14 +4,14 @@
 set -e
 
 # Variables
-CONFIGFOLDER=/etc/bashshot
-CONFIG=/etc/bashshot/bashshot.conf
+CONFIGFOLDER="/etc/bashshot"
+CONFIG="/etc/bashshot/bashshot.conf"
 # cd to script dir
 DIR=$( cd "$( dirname "$0" )" && pwd )
 cd $DIR
 
 # Check if root
-if [[ whoami != "root" ]]; then
+if [[ whoami -ne "root" ]]; then
 	echo "Must be root to run this installer."
 	exit 1;
 fi
@@ -40,14 +40,14 @@ cat $DIR/logrotate.txt > /etc/logrotate.d/bashshot
 # --------------------------
 # Creates configfolder
 mkdir -p $CONFIGFOLDER
-if [ -f $CONFIG]
+if [[ -f $CONFIG ]]
 then
 	echo "Config files exists, will not overwrite it."
 else
 	# Creates config file
 	touch $CONFIG
 	# Fill config with default values
-	cat >> $CONFIG << '_EOF_'
+	cat >> $CONFIG << _EOF_
 # This is the config file for bashShot - Time Slider-like (from Solaris) functionality
 # For ZFSonLinux implemented as shell script
 # 		-----------------------
@@ -67,7 +67,7 @@ else
 # Every month - saved for a year
  	monthly = no
 
-'_EOF_'
+_EOF_
 fi
 
 # Install into crontab

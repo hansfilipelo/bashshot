@@ -1,4 +1,11 @@
 #!/bin/bash
+# If something fails - exit
+set -e
+# Check if root
+if [[ whoami != 'root' ]]; then
+	echo "Must be root to run this installer."
+	exit 1;
+fi
 
 # Removes bashShot from crontab
 MYCRON=/tmp/mycron.txt

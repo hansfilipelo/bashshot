@@ -7,29 +7,40 @@ cd $DIR
 # Path to ZFS
 ZFS=/sbin/zfs
 
-# Gets date and filesystems (FS) from FS file
-FILESYSTEMS=/etc/bashshot/filesystems.list
-DATE=$(date +%Y%m%d%H%M)
+# Gets date and filesystems (FS) from config file
+source /etc/bashshot/bashshot.conf
+DATE=$(date '+%Y-%m-%d %H:%M')
 LOG=/var/log/bashshot.log
 
-# Creates temporary file which will be sent to logs@cyd.liu.se
+# Creates temporary file which will be sent to logfile
 TEMP=/tmp/log.txt
 touch $TEMP
 exec >> $TEMP 2>&1
 
-# Sets scripts period
-if [ $1 == "frequently" -o $1 == "hourly" -o $1 == "daily" -o $1 == "weekly" -o $1 == "monthly" ]
-then
-	PERIOD=$1
-else
-	echo ""
-	echo "Usage:"
-	echo "	bashshot.sh <frequently|hourly|daily|weekly|monthly|>"
-	echo ""
-	# Outputs TEMP to LOG
-	cat $TEMP >> $LOG
-	rm $TEMP
-	exit
+
+# Decide which periods that is to be snapshoted
+declare -a PERIOD
+IT=0
+
+if [[ $frequent == yes ]]; then
+	PERIOD[$IT]='frequent'
+	IT=$IT+1
+fi
+if [[ $hourly == yes && $(date '+%M') == "00" ]]; then
+	PERIOD[$IT]='hourly'
+	IT=$IT+1
+fi
+if [[ $daily == yes && $(date '+%H:%M') == "00:00" ]]; then
+	PERIOD[$IT]='daily'
+	IT=$IT+1
+fi
+if [[ $weekly == yes && $(date '+%u %H:%M') == "7 00:00" ]]; then
+	PERIOD[$IT]='weekly'
+	IT=$IT+1
+fi
+if [[ $monthly == yes && $(date '+%d %H:%M') == "1 00:00"]]; then
+	PERIOD[$IT]='monthly'
+	IT=$IT+1
 fi
 
 # Echos stuff
@@ -38,18 +49,20 @@ echo "Written by bashshot.sh"
 echo "-------------------------"
 date "+%Y-%m-%d %H:%M"
 
-# Loops through FS to snapshot
-while read FS
-do
-	$ZFS snapshot $FS@$PERIOD-$DATE
-	
-	if [ $? == 0 ]
-	then
-		echo "$PERIOD snapshot of $FS taken"
-	else
-		echo "$PERIOD SNAPSHOT OF $FS FAILED!"
-	fi
-done < $FILESYSTEMS
+#Loops through periods to run
+for TIME in $PERIOD
+	# Loops through FS to snapshot
+	for FS in $FILESYSTEMS
+		$ZFS snapshot $FS@$PERIOD-$DATE
+		# Confirm status
+		if [ $? == 0 ]
+		then
+			echo "$TIME snapshot of $FS taken"
+		else
+			echo "$TIME SNAPSHOT OF $FS FAILED!"
+		fi
+	done
+done
 
 echo "------------------------"
 

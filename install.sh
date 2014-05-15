@@ -54,18 +54,18 @@ else
 # Enter filesystems to snapshot as a bash array, i e: 
 # 		FILESYSTEMS = (poolX/fsY poolZ/fsW)
 
-	FILESYSTEMS = ()
+declare -a FILESYSTEMS = ()
 
 # Every 15 minutes - saved for an hour
-	frequent = no
+frequent=no
 # Every hour - saved for a day
-	hourly = no
+hourly=no
 # Every day - saved for a week
-	daily = no
+daily=no
 # Every week - saved for a month
- 	weekly = no
+weekly=no
 # Every month - saved for a year
- 	monthly = no
+monthly=no
 
 _EOF_
 fi

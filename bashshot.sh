@@ -44,7 +44,9 @@ if [[ $monthly == yes && $(date '+%d %H:%M') == "1 00:00"]]; then
 fi
 
 if [[ $1 == DEBUG ]]; then
-	echo $(DEBUG)
+	for TIME in $PERIOD
+		echo $(TIME)
+	done
 fi
 
 # Echos stuff

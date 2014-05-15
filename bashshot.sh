@@ -43,6 +43,10 @@ if [[ $monthly == yes && $(date '+%d %H:%M') == "1 00:00"]]; then
 	IT=$IT+1
 fi
 
+if [[ $1 == DEBUG ]]; then
+	echo $(DEBUG)
+fi
+
 # Echos stuff
 echo ""
 echo "Written by bashshot.sh"
@@ -72,10 +76,7 @@ echo "------------------------"
 # Appends stuff in TEMP/mail to log
 
 # Write to log once a week and every month
-if [ $PERIOD == "weekly" -o $PERIOD == "monthly" ]
-then 
-	cat $TMP >> $LOG
-fi
+cat $TMP >> $LOG
 
 #Removes temporary files
 rm $TEMP

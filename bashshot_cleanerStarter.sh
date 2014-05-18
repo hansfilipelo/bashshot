@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # Get array
 . /usr/bin/array

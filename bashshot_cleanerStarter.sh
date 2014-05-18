@@ -7,7 +7,7 @@
 CLEANER=/usr/bin/bashshot_cleaner.sh
 PERIOD=$(array 'frequently' 'hourly' 'daily' 'weekly' 'monthly')
 
-#Decide which periods that is to be cleaned
+# Decide which periods that is to be cleaned
 if [[ $frequently == "yes" ]]
 then
         PERIOD=$(array "$PERIOD" 'frequently')

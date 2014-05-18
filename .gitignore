@@ -1,0 +1,47 @@
+# LaTeX files #
+##################
+*.aux
+*.log
+*.pdf
+*.toc
+*.out
+
+# Archives #
+############
+*.gz
+
+# Executables #
+###############
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.app
+*.user
+*.hex
+*.elf
+*.mk
+*.d
+*.eep
+*.lss
+*.map
+*.srec
+
+# Qt generated files #
+######################
+moc_*
+ui_*
+
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehtthumbs.db
+Thumbs.db
+

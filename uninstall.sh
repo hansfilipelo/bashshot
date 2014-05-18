@@ -15,7 +15,6 @@ crontab $MYCRON
 # Removes scripts
 rm /usr/bin/bashshot.sh
 rm /usr/bin/bashshot_cleaner.sh
-rm /usr/bin/bashshot_cleanerStarter.sh
 rm /usr/bin/array
 
 # Removes configuration

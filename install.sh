@@ -21,7 +21,6 @@ fi
 # Installing scripts
 cp $DIR/bashshot.sh /usr/bin/
 cp $DIR/bashshot_cleaner.sh /usr/bin/
-cp $DIR/bashshot_cleanerStarter.sh /usr/bin/
 cp $DIR/array /usr/bin/
 
 #---------------------------------------------------------

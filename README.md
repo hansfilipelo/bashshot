@@ -15,9 +15,16 @@ Clone project, cd to folder:
 	git clone git://github.com/hansfilipelo/bashshot.git
 	cd bashshot
 
-Run install.sh and follow the on screen instructions: 
+Run install.sh: 
 
 	./install.sh
+
+Edit /etc/bashshot/bashshot.conf. Set FILESYSTEMS to snapshot and wanted periods on snapshots: 
+
+	FILESYSTEMS=$(array 'pool/filesystem' 'pool/filesystem')
+	frequently="no"
+	daily="yes"
+	weekly="yes"
 
 
 UNINSTALL

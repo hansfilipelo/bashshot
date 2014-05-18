@@ -25,13 +25,6 @@ cp $DIR/array /usr/bin/
 
 #---------------------------------------------------------
 
-# Saves crontab temporary
-CRONTAB=/etc/cron.d/bashshot
-touch $CRONTAB
-crontab -l > $CRONTAB
-
-# --------------------------
-
 # Installing logrotate for /var/log/bashshot.log
 touch /var/log/bashshot.log
 touch /etc/logrotate.d/bashshot
@@ -78,6 +71,10 @@ monthly="no"
 _EOF_
 fi
 
+# Creates crontab
+CRONTAB=/etc/cron.d/bashshot
+touch $CRONTAB
+chmod a+x /etc/cron.d/bashshot
 # Install into crontab
 echo "# Bashshot - Solaris time-slider-like functionality for GNU/Linux implemented in bash" >> $CRONTAB
 echo "00,15,30,45 * * * * root /usr/bin/bashshot.sh" >> $CRONTAB

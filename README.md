@@ -10,6 +10,8 @@ This software is released as free software. You are free to download, distribute
 
 INSTALLATION
 =================================
+These scripts neds crontab/anacron, which are installed by default on Debian and Ubuntu. You also need ZFSonLinux (zfsonlinux.org). 
+
 Clone project, cd to folder: 
 
 	git clone git://github.com/hansfilipelo/bashshot.git

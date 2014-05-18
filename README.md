@@ -19,7 +19,7 @@ Clone project, cd to folder:
 
 Run install.sh: 
 
-	./install.sh
+	sudo ./install.sh
 
 Edit /etc/bashshot/bashshot.conf. Set FILESYSTEMS to snapshot and wanted periods on snapshots. Example below: 
 
@@ -35,7 +35,7 @@ UNINSTALL
 =================================
 Run uninstall.sh
 
-	./uninstall.sh
+	sudo ./uninstall.sh
 
 
 REQUIREMENTS

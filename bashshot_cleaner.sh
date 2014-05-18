@@ -120,8 +120,8 @@ done < $SNAPSHOTS
 
 # List remaining snapshots
 echo ""
-echo "Remaining snapshots"
-$ZFS list -t snapshot
+echo "Remaining $PERIOD snapshots"
+$ZFS list -t snapshot | grep $PERIOD
 
 echo "-----------------------------"
 

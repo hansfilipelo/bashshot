@@ -63,6 +63,7 @@ else
 
 FILESYSTEMS=
 
+# Choose time period for scripts to snapshot
 # Every 15 minutes - saved for an hour
 frequently="no"
 # Every hour - saved for a day

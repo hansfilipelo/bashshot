@@ -27,7 +27,7 @@ cp $DIR/array /usr/bin/
 #---------------------------------------------------------
 
 # Saves crontab temporary
-CRONTAB=$DIR/mycron
+CRONTAB=/etc/cron.d/bashshot
 touch $CRONTAB
 crontab -l > $CRONTAB
 
@@ -81,12 +81,8 @@ fi
 
 # Install into crontab
 echo "# Bashshot - Solaris time-slider-like functionality for GNU/Linux implemented in bash" >> $CRONTAB
-echo "0,15,30,45 * * * * /usr/bin/bashshot.sh" >> $CRONTAB
-echo "01,16,31,46 * * * * /usr/bin/bashshot_cleanerStarter.sh" >> $CRONTAB
-
-# Sets crontab
-crontab $CRONTAB
-rm $CRONTAB
+echo "0,15,30,45 * * * * root /usr/bin/bashshot.sh" >> $CRONTAB
+echo "01,16,31,46 * * * * root /usr/bin/bashshot_cleanerStarter.sh" >> $CRONTAB
 
 #---------------------------------------------------------
 # Confirm install

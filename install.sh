@@ -81,8 +81,14 @@ fi
 
 # Install into crontab
 echo "# Bashshot - Solaris time-slider-like functionality for GNU/Linux implemented in bash" >> $CRONTAB
-echo "0,15,30,45 * * * * root /usr/bin/bashshot.sh" >> $CRONTAB
-echo "01,16,31,46 * * * * root /usr/bin/bashshot_cleanerStarter.sh" >> $CRONTAB
+echo "00,15,30,45 * * * * root /usr/bin/bashshot.sh" >> $CRONTAB
+echo "# Cleaner scripts" >> $CRONTAB
+echo "01,16,31,46 * * * * /usr/bin/bashshot_cleaner.sh frequently" >> $CRONTAB
+echo "02 * * * * /usr/bin/bashshot_cleaner.sh hourly" >> $CRONTAB
+echo "03 03 * * * /usr/bin/bashshot_cleaner.sh daily" >> $CRONTAB
+echo "03 04 * * 0 /usr/bin/bashshot_cleaner.sh weekly" >> $CRONTAB
+echo "03 05 1 * * /usr/bin/bashshot_cleaner.sh monthly" >> $CRONTAB
+echo ""
 
 #---------------------------------------------------------
 # Confirm install

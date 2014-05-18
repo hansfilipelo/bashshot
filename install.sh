@@ -21,6 +21,7 @@ fi
 # Installing scripts
 cp $DIR/bashshot.sh /usr/bin/
 cp $DIR/bashshot_cleaner.sh /usr/bin/
+cp $DIR/array /usr/bin/
 
 #---------------------------------------------------------
 
@@ -51,21 +52,25 @@ else
 # This is the config file for bashShot - Time Slider-like (from Solaris) functionality
 # For ZFSonLinux implemented as shell script
 # 		-----------------------
-# Enter filesystems to snapshot as a bash array, i e: 
-# 		FILESYSTEMS = (poolX/fsY poolZ/fsW)
 
-declare -a FILESYSTEMS = ()
+# Gets array, a POSIX compliant array implementation
+. /usr/bin/array
+
+# Enter filesystems to snapshot as a array, i e: 
+# 		FILESYSTEMS='$'(array 'poolX/fsY' 'poolZ/fsW')
+
+FILESYSTEMS=
 
 # Every 15 minutes - saved for an hour
-frequent=no
+frequently="no"
 # Every hour - saved for a day
-hourly=no
+hourly="no"
 # Every day - saved for a week
-daily=no
+daily="no"
 # Every week - saved for a month
-weekly=no
+weekly="no"
 # Every month - saved for a year
-monthly=no
+monthly="no"
 
 _EOF_
 fi

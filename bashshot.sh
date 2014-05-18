@@ -8,44 +8,50 @@ cd $DIR
 ZFS=/sbin/zfs
 
 # Gets date and filesystems (FS) from config file
-source /etc/bashshot/bashshot.conf
-DATE=$(date '+%Y-%m-%d %H:%M')
+. /etc/bashshot/bashshot.conf
+DATE=$(date '+%Y-%m-%d_%H:%M')
 LOG=/var/log/bashshot.log
 
 # Creates temporary file which will be sent to logfile
 TEMP=/tmp/log.txt
 touch $TEMP
-exec >> $TEMP 2>&1
-
+if [[ $1 != "DEBUG" ]]
+then
+	exec >> $TEMP 2>&1
+fi
 
 # Decide which periods that is to be snapshoted
-declare -a PERIOD
-IT=0
-
-if [[ $frequent == yes ]]; then
-	PERIOD[$IT]='frequent'
-	IT=$IT+1
-fi
-if [[ $hourly == yes && $(date '+%M') == "00" ]]; then
-	PERIOD[$IT]='hourly'
-	IT=$IT+1
-fi
-if [[ $daily == yes && $(date '+%H:%M') == "00:00" ]]; then
-	PERIOD[$IT]='daily'
-	IT=$IT+1
-fi
-if [[ $weekly == yes && $(date '+%u %H:%M') == "7 00:00" ]]; then
-	PERIOD[$IT]='weekly'
-	IT=$IT+1
-fi
-if [[ $monthly == yes && $(date '+%d %H:%M') == "1 00:00"]]; then
-	PERIOD[$IT]='monthly'
-	IT=$IT+1
+if [[ $frequently == "yes" ]]
+then
+	PERIOD=$(array "$PERIOD" 'frequently')
 fi
 
-if [[ $1 == DEBUG ]]; then
-	for TIME in $PERIOD
-		echo $(TIME)
+if [[ $hourly == "yes" && $(date '+%M') == "00" ]]
+then
+	PERIOD=$(array "$PERIOD" 'hourly')
+fi
+
+if [[ $daily == "yes" && $(date '+%H:%M') == "00:00" ]]
+then
+	PERIOD=$(array "$PERIOD" 'daily')
+fi
+
+if [[ $weekly == "yes" && $(date '+%u %H:%M') == "7 00:00" ]]
+then
+	PERIOD=$(array "$PERIOD" 'weekly')
+fi
+
+if [[ $monthly == "yes" && $(date '+%d %H:%M') == "01 00:00" ]]
+then
+	PERIOD=$(array "$PERIOD" 'monthly')
+fi
+
+# Writes if debug set
+if [[ $1 == "DEBUG" ]]; then
+	echo "DEBUG: Periods to snapshot"
+	echo "$PERIOD" | while IFS= read element
+	do
+		echo "$element"
 	done
 fi
 
@@ -56,29 +62,32 @@ echo "-------------------------"
 date "+%Y-%m-%d %H:%M"
 
 #Loops through periods to run
-for TIME in $PERIOD
-	# Loops through FS to snapshot
-	for FS in $FILESYSTEMS
-		$ZFS snapshot $FS@$PERIOD-$DATE
-		# Confirm status
-		if [ $? == 0 ]
+echo "$PERIOD" | while IFS= read TIME
+do
+	# Loops through FS to snapshot, but skip empty
+	echo "$FILESYSTEMS" | while IFS= read FS
+	do
+		if [[ -n $TIME ]]
 		then
-			echo "$TIME snapshot of $FS taken"
-		else
-			echo "$TIME SNAPSHOT OF $FS FAILED!"
+			$ZFS snapshot $FS@$TIME-$DATE
+			# Confirm status to log
+			if [ $? == 0 ]
+			then
+				echo "$TIME snapshot of $FS taken"
+			else
+				echo "$TIME SNAPSHOT OF $FS FAILED!"
+			fi
 		fi
 	done
 done
 
 echo "------------------------"
 
-# Sends email
-#cat $TEMP | mailx -s "bashshot.sh reporting for duty" logs@cyd.liu.se
-
 # Appends stuff in TEMP/mail to log
 
-# Write to log once a week and every month
+# Write to log
 cat $TMP >> $LOG
 
-#Removes temporary files
+#Removes temporary log file
 rm $TEMP
+

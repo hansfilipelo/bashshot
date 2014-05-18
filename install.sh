@@ -49,11 +49,13 @@ else
 	touch $CONFIG
 	# Fill config with default values
 	cat >> $CONFIG << _EOF_
+#
 # This is the config file for bashShot - Time Slider-like (from Solaris) functionality
 # For ZFSonLinux implemented as shell script
 # 		-----------------------
 
 # Gets array, a POSIX compliant array implementation
+# This implementation is created by makefu@github - https://github.com/makefu/array
 . /usr/bin/array
 
 # Enter filesystems to snapshot as a array, i e: 

@@ -8,9 +8,7 @@ if [[ whoami -ne "root" ]]; then
 fi
 
 # Removes bashShot from crontab
-MYCRON=/tmp/mycron.txt
-(crontab -l | grep -iv bashshot) > $MYCRON
-crontab $MYCRON
+rm /etc/cron.d/bashshot
 
 # Removes scripts
 rm /usr/bin/bashshot.sh

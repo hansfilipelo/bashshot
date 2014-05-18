@@ -76,14 +76,14 @@ CRONTAB=/etc/cron.d/bashshot
 touch $CRONTAB
 chmod a+x /etc/cron.d/bashshot
 # Install into crontab
-echo "# Bashshot - Solaris time-slider-like functionality for GNU/Linux implemented in bash" >> $CRONTAB
+echo "# Bashshot - Solaris time-slider-like functionality for GNU/Linux implemented in bash" > $CRONTAB
 echo "00,15,30,45 * * * * root /usr/bin/bashshot.sh" >> $CRONTAB
 echo "# Cleaner scripts" >> $CRONTAB
-echo "01,16,31,46 * * * * /usr/bin/bashshot_cleaner.sh frequently" >> $CRONTAB
-echo "02 * * * * /usr/bin/bashshot_cleaner.sh hourly" >> $CRONTAB
-echo "03 03 * * * /usr/bin/bashshot_cleaner.sh daily" >> $CRONTAB
-echo "03 04 * * 0 /usr/bin/bashshot_cleaner.sh weekly" >> $CRONTAB
-echo "03 05 1 * * /usr/bin/bashshot_cleaner.sh monthly" >> $CRONTAB
+echo "01,16,31,46 * * * * root /usr/bin/bashshot_cleaner.sh frequently" >> $CRONTAB
+echo "02 * * * * root /usr/bin/bashshot_cleaner.sh hourly" >> $CRONTAB
+echo "03 03 * * * root /usr/bin/bashshot_cleaner.sh daily" >> $CRONTAB
+echo "03 04 * * 0 root /usr/bin/bashshot_cleaner.sh weekly" >> $CRONTAB
+echo "03 05 1 * * root /usr/bin/bashshot_cleaner.sh monthly" >> $CRONTAB
 echo ""
 
 #---------------------------------------------------------

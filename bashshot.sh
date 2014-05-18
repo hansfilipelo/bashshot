@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if root
+if [[ whoami -ne "root" ]]; then
+	echo "Must be root to run this script."
+	exit 1;
+fi
+
 # cd to script dir
 DIR=$( cd "$( dirname "$0" )" && pwd )
 cd $DIR
@@ -69,7 +75,7 @@ do
 	do
 		if [[ -n $TIME ]]
 		then
-			$ZFS snapshot $FS@$TIME-$DATE
+			$ZFS snapshot $FS@"$TIME"_"$DATE"
 			# Confirm status to log
 			if [ $? == 0 ]
 			then
@@ -86,8 +92,13 @@ echo "------------------------"
 # Appends stuff in TEMP/mail to log
 
 # Write to log
-cat $TMP >> $LOG
+if [[ $1 != "DEBUG"  ]]
+then
+	cat $TEMP >> $LOG
+fi
 
 #Removes temporary log file
 rm $TEMP
+
+exit 0;
 

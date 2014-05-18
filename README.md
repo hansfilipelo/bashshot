@@ -19,12 +19,14 @@ Run install.sh:
 
 	./install.sh
 
-Edit /etc/bashshot/bashshot.conf. Set FILESYSTEMS to snapshot and wanted periods on snapshots: 
+Edit /etc/bashshot/bashshot.conf. Set FILESYSTEMS to snapshot and wanted periods on snapshots. Example below: 
 
 	FILESYSTEMS=$(array 'pool/filesystem' 'pool/filesystem')
 	frequently="no"
+	hourly="no"
 	daily="yes"
 	weekly="yes"
+	monthly="yes"
 
 
 UNINSTALL

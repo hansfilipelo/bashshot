@@ -13,22 +13,22 @@ then
         PERIOD=$(array "$PERIOD" 'frequently')
 fi
 
-if [[ $hourly == "yes" && $(date '+%M') == "00" ]]
+if [[ $hourly == "yes" && $(date '+%M') == "01" ]]
 then
         PERIOD=$(array "$PERIOD" 'hourly')
 fi
 
-if [[ $daily == "yes" && $(date '+%H:%M') == "00:00" ]]
+if [[ $daily == "yes" && $(date '+%H:%M') == "00:01" ]]
 then
         PERIOD=$(array "$PERIOD" 'daily')
 fi
 
-if [[ $weekly == "yes" && $(date '+%u %H:%M') == "7 00:00" ]]
+if [[ $weekly == "yes" && $(date '+%u %H:%M') == "7 00:01" ]]
 then
         PERIOD=$(array "$PERIOD" 'weekly')
 fi
 
-if [[ $monthly == "yes" && $(date '+%d %H:%M') == "01 00:00" ]]
+if [[ $monthly == "yes" && $(date '+%d %H:%M') == "01 00:01" ]]
 then
         PERIOD=$(array "$PERIOD" 'monthly')
 fi

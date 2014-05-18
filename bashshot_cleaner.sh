@@ -3,7 +3,10 @@
 # Creates temporary files
 TMP=/tmp/snapshot_cleanerlog_tmp.txt
 touch $TMP
-exec >> $TMP 2>&1
+if [[ $1 != DEBUG ]]
+then
+	exec >> $TMP 2>&1
+fi
 SNAPSHOTS=/tmp/snapshots_tmp.txt
 touch $SNAPSHOTS
 
@@ -81,10 +84,10 @@ do
 	while read line
 	do
 		# Takes out only name part of snapshot-line
-		SS=$(echo $line | awk '{print $1}')
+		SS=$(echo $line | awk '{print $PERIOD}')
 		
 		# Takes out only date-part of snapshots in storage
-		SSDATE=$(echo $line | awk '{print $1}' | sed 's/[^0-9]//g')
+		SSDATE=$(echo $line | awk '{print $PERIOD}' | sed 's/[^0-9]//g')
 		
 		# If todays date minus snapshot date minus TIMEDIFF is >0, then it's to old
 		# Saves daily for 1 week, weekly for a month and monthly for a year
@@ -107,9 +110,9 @@ $ZFS list -t snapshot
 
 echo "-----------------------------"
 
-# Write to log once a week and every month
-if [ $PERIOD == "weekly" -o $PERIOD == "monthly" ]
-then 
+# Write to log
+if [[ $1 != DEBUG ]]
+then
 	cat $TMP >> $LOG
 fi
 

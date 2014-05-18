@@ -80,6 +80,7 @@ fi
 # Install into crontab
 echo "# Bashshot - Solaris time-slider-like functionality for GNU/Linux implemented in bash" >> $CRONTAB
 echo "0,15,30,45 * * * * /usr/bin/bashshot.sh" >> $CRONTAB
+echo "01,16,31,46 * * * * /usr/bin/bashshot_cleanerStarter.sh" >> $CRONTAB
 
 # Sets crontab
 crontab $CRONTAB

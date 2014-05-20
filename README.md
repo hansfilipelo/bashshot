@@ -1,6 +1,6 @@
 bashShot
 =================================
-Replicates the Solaris time-slider functionality as shell script with help of cron. Tested on Debian and Ubuntu GNU/Linux with zfsonlinux.
+Replicates the Solaris time-slider functionality as shell script with help of cron. Tested on Debian and Ubuntu GNU/Linux with ZFSonLinux (zfsonlinux.org).
 
 
 LICENSE

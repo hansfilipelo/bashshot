@@ -36,7 +36,8 @@ UNINSTALL
 Run uninstall.sh
 
 	sudo ./uninstall.sh
-
+	# To also remove config
+	sudo ./uninstall.sh purge
 
 REQUIREMENTS
 =================================

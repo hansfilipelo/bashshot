@@ -5,8 +5,21 @@ Replicates the Solaris time-slider functionality as shell script with help of cr
 
 LICENSE
 =================================
-This software is released as free software. You are free to download, distribute and change it as you like. This software comes with absolutely NO WARRANTY. Use at your own risk. 
+    bashShot - Time Slider-like implementation for ZFSonLinux using cron
+    Copyright (C) <year>  Hans-Filip Elo
 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 INSTALLATION
 =================================

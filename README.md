@@ -21,6 +21,10 @@ LICENSE
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+REQUIREMENTS
+=================================
+Should run on any *NIX system that has crontab and ZFS (zfsonlinux.org) installed, but only tested on Debian and Ubuntu. If you are interested in running bashShot on another distro or OS, please confirm it's functioning status. 
+
 INSTALLATION
 =================================
 These scripts needs crontab/anacron, which are installed by default on Debian and Ubuntu. You also need ZFSonLinux (zfsonlinux.org). 
@@ -52,7 +56,4 @@ Run uninstall.sh
 	# To also remove config
 	sudo ./uninstall.sh purge
 
-REQUIREMENTS
-=================================
-Should run on any *NIX system that has crontab and ZFS (zfsonlinux.org) installed. 
 

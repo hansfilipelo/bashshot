@@ -8,22 +8,22 @@ if [[ whoami -ne "root" ]]; then
 fi
 
 # Removes bashShot from crontab
-rm /etc/cron.d/bashshot
+rm -f /etc/cron.d/bashshot
 
 # Removes scripts
-rm /usr/bin/bashshot.sh
-rm /usr/bin/bashshot_cleaner.sh
-rm /usr/bin/array
+rm -f /usr/bin/bashshot.sh
+rm -f /usr/bin/bashshot_cleaner.sh
+rm -f /usr/bin/array
 
 if [[ $1 == purge ]]
 then
 	# Removes configuration
-	rm -r /etc/bashshot
+	rm -rf /etc/bashshot
 fi
 
 # Removes file for log rotation
-rm /etc/logrotate.d/bashshot
+rm -f /etc/logrotate.d/bashshot
 
 # Removes logfile
-rm /var/log/bashshot.log
+rm -f /var/log/bashshot.log
 

@@ -52,7 +52,7 @@ else
 . /usr/bin/array
 
 # Enter filesystems to snapshot as a array, i e: 
-# 		'FILESYSTEMS=$(array 'poolX/fsY' 'poolZ/fsW')'
+# 		FILESYSTEMS='$'(array 'poolX/fsY' 'poolZ/fsW')
 
 FILESYSTEMS=
 

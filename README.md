@@ -1,11 +1,11 @@
 bashShot
 =================================
-Replicates the Solaris time-slider functionality as shell script with help of cron. Tested on Debian and Ubuntu GNU/Linux with ZFSonLinux (zfsonlinux.org).
+Replicates the Solaris sun-auto-snap functionality as shell script with help of cron. Tested on Debian and Ubuntu GNU/Linux with ZFSonLinux (zfsonlinux.org).
 
 
 LICENSE
 =================================
-    bashShot - Time Slider-like implementation for ZFSonLinux using cron
+    bashShot - sun-auto-snap-like implementation for ZFSonLinux using cron
     Copyright (C) 2014  Hans-Filip Elo
 
     This program is free software: you can redistribute it and/or modify

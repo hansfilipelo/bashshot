@@ -11,9 +11,8 @@ fi
 rm -f /etc/cron.d/bashshot
 
 # Removes scripts
-rm -f /usr/bin/bashshot.sh
-rm -f /usr/bin/bashshot_cleaner.sh
-rm -f /usr/bin/array
+rm -f /usr/bin/bashshot.bash
+rm -f /usr/bin/bashshot_cleaner.bash
 
 if [[ $1 == purge ]]
 then
@@ -26,4 +25,3 @@ rm -f /etc/logrotate.d/bashshot
 
 # Removes logfile
 rm -f /var/log/bashshot.log
-

@@ -1,0 +1,25 @@
+#
+# This is the config file for bashShot - Time Slider-like (from Solaris) functionality
+# for ZFSonLinux, implemented as a shell script.
+# 		-----------------------
+
+# Gets array, a POSIX compliant array implementation
+# This implementation is created by makefu@github - https://github.com/makefu/array
+. /usr/bin/array
+
+# Enter filesystems to snapshot as a array, i e:
+# 		FILESYSTEMS='$'(array 'poolX/fsY' 'poolZ/fsW')
+
+FILESYSTEMS=
+
+# Choose time period for scripts to snapshot
+# Every 15 minutes - saved for an hour
+frequently="no"
+# Every hour - saved for a day
+hourly="no"
+# Every day - saved for a week
+daily="no"
+# Every week - saved for a month
+weekly="no"
+# Every month - saved for a year
+monthly="no"

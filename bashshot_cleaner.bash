@@ -30,7 +30,7 @@ then
 else
         echo ""
         echo "Usage:"
-        echo "  bashshot.sh <frequently|hourly|daily|weekly|monthly|>"
+        echo "  $0 <frequently|hourly|daily|weekly|monthly|>"
         echo ""
         # Outputs TEMP to LOG
         cat $TMP >> $LOG
@@ -67,7 +67,7 @@ then
 	else
 		TIMEDIFF=70000
 	fi
-	
+
 elif [ $PERIOD == weekly ]
 then
 	# We keep weekly snapshots for a month
@@ -77,7 +77,7 @@ then
 	else
 		TIMEDIFF=1000000
 	fi
-	
+
 elif [ $PERIOD == monthly ]
 then
 	# We keep monthly snapshots for a year
@@ -101,10 +101,10 @@ while read line
 do
 	# Takes out only name part of snapshot-line
 	SS=$(echo $line | awk '{print $1}')
-	
+
 	# Takes out only date-part of snapshots in storage
 	SSDATE=$(echo $line | awk '{print $1}' | sed 's/[^0-9]//g')
-	
+
 	# If todays date minus snapshot date minus TIMEDIFF is >0, then it's to old
 	# Saves daily for 1 week, weekly for a month and monthly for a year
 	DIFF=$(($DATE-$SSDATE-$TIMEDIFF))
@@ -127,11 +127,10 @@ echo "-----------------------------"
 
 # Write to log once a week and every month
 if [ $PERIOD == "weekly" -o $PERIOD == "monthly" ]
-then 
+then
 	cat $TMP >> $LOG
 fi
 
 # Remove temporary files
 rm $SNAPSHOTS
 rm $TMP
-

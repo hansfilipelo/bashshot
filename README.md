@@ -23,22 +23,22 @@ LICENSE
 
 REQUIREMENTS
 =================================
-Should run on any *NIX system that has crontab and ZFS (zfsonlinux.org) installed, but only tested on Debian and Ubuntu. If you are interested in running bashShot on another distro or OS, please confirm it's functioning status. 
+Should run on any *NIX system that has crontab and ZFS (zfsonlinux.org) installed, but only tested on Debian and Ubuntu. If you are interested in running bashShot on another distro or OS, please confirm it's functioning status.
 
 INSTALLATION
 =================================
-These scripts needs crontab/anacron, which are installed by default on Debian and Ubuntu. You also need ZFSonLinux (zfsonlinux.org). 
+These scripts needs crontab/anacron, which are installed by default on Debian and Ubuntu. You also need ZFSonLinux (zfsonlinux.org). Note that the author recommends reading and understanding any script before running it as root.
 
-Clone project, cd to folder: 
+Clone project, cd to folder:
 
 	git clone git://github.com/hansfilipelo/bashshot.git
 	cd bashshot
 
-Run install.sh: 
+Run install.bash:
 
-	sudo ./install.sh
+	sudo ./install.bash
 
-Edit /etc/bashshot/bashshot.conf. Set FILESYSTEMS to snapshot and wanted periods on snapshots. Example below: 
+Edit /etc/bashshot/bashshot.conf. Set FILESYSTEMS to snapshot and wanted periods on snapshots. Example below:
 
 	FILESYSTEMS=$(array 'pool/filesystem' 'pool/filesystem')
 	frequently="no"
@@ -55,5 +55,3 @@ Run uninstall.sh
 	sudo ./uninstall.sh
 	# To also remove config
 	sudo ./uninstall.sh purge
-
-

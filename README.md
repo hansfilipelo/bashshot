@@ -23,11 +23,11 @@ LICENSE
 
 REQUIREMENTS
 =================================
-Should run on any Linux system that has bash, crontab and ZFS (zfsonlinux.org) installed, but has only been tested on Debian and Ubuntu. If you are interested in running bashShot on another distro or OS, please proceed in caution and confirm it's operability.
+Should run on any Linux system that has bash, cron and ZFS (zfsonlinux.org) installed, but has only been tested on Debian and Ubuntu. If you are interested in running bashShot on another distro or OS, please proceed in caution and confirm it's operability.
 
 INSTALLATION
 =================================
-These scripts needs bash and crontab/anacron, which are installed by default on Debian and Ubuntu. You also need ZFSonLinux (zfsonlinux.org). Note that the author recommends reading and understanding any script before running it as root.
+These scripts needs bash and cron/anacron, which are installed by default on Debian and Ubuntu. You also need ZFSonLinux (zfsonlinux.org). Note that the author recommends reading and understanding any script before running it as root.
 
 Clone the project and switch to it's folder:
 

@@ -1,16 +1,13 @@
 #!/bin/bash
 
 # Check if root
-if [[ whoami -ne "root" ]]; then
-	echo "Must be root to run this script."
-	exit 1;
+if [[ "$USER" != "root" ]]; then
+  echo "Bashshot must be installed as root."
+  sudo -u "root" -H $0 "$@"; exit;
 fi
 
 # cd to script dir
 cd "$( dirname "$0" )"
-
-# Path to ZFS
-ZFS=/sbin/zfs
 
 # Gets date and filesystems (FS) from config file
 . /usr/local/etc/bashshot/bashshot.conf

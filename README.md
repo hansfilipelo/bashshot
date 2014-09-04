@@ -6,7 +6,7 @@ Replicates the Solaris sun-auto-snap functionality as shell script with help of 
 LICENSE
 =================================
     bashShot - sun-auto-snap-like implementation for ZFSonLinux using cron
-    Copyright (C) 2014  Hans-Filip Elo
+    Copyright (C) 2014  Hans-Filip Elo, Christian Luckey
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,24 +23,24 @@ LICENSE
 
 REQUIREMENTS
 =================================
-Should run on any *NIX system that has crontab and ZFS (zfsonlinux.org) installed, but only tested on Debian and Ubuntu. If you are interested in running bashShot on another distro or OS, please confirm it's functioning status.
+Should run on any Linux system that has bash, crontab and ZFS (zfsonlinux.org) installed, but has only been tested on Debian and Ubuntu. If you are interested in running bashShot on another distro or OS, please proceed in caution and confirm it's operability.
 
 INSTALLATION
 =================================
-These scripts needs crontab/anacron, which are installed by default on Debian and Ubuntu. You also need ZFSonLinux (zfsonlinux.org). Note that the author recommends reading and understanding any script before running it as root.
+These scripts needs bash and crontab/anacron, which are installed by default on Debian and Ubuntu. You also need ZFSonLinux (zfsonlinux.org). Note that the author recommends reading and understanding any script before running it as root.
 
-Clone project, cd to folder:
+Clone the project and switch to it's folder:
 
 	git clone git://github.com/hansfilipelo/bashshot.git
 	cd bashshot
 
-Run install.bash:
+Install the software on your system:
 
 	sudo ./install.bash
 
-Edit /etc/bashshot/bashshot.conf. Set FILESYSTEMS to snapshot and wanted periods on snapshots. Example below:
+Edit /etc/bashshot/bashshot.conf. Set which filesystems to snapshot and the periocity of these snapshots. Example below:
 
-	FILESYSTEMS=$(array 'pool/filesystem' 'pool/filesystem')
+	filesystems=$(array 'pool/filesystem' 'pool/filesystem')
 	frequently="no"
 	hourly="no"
 	daily="yes"
@@ -50,8 +50,8 @@ Edit /etc/bashshot/bashshot.conf. Set FILESYSTEMS to snapshot and wanted periods
 
 UNINSTALL
 =================================
-Run uninstall.sh
+Simply run uninstall.bash:
 
-	sudo ./uninstall.sh
+	sudo ./uninstall.bash
 	# To also remove config
-	sudo ./uninstall.sh purge
+	sudo ./uninstall.bash purge

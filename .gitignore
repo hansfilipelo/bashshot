@@ -45,3 +45,7 @@ ui_*
 ehtthumbs.db
 Thumbs.db
 
+# Emacs #
+#########
+\#*\#
+*~

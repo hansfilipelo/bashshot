@@ -1,23 +1,24 @@
 #!/bin/bash
 # If something fails - exit
+set -e
 
-# Check if root
-if [[ whoami -ne "root" ]]; then
-	echo "Must be root to run this installer."
-	exit 1;
+# Check if the user is root
+if [[ "$USER" != "root" ]]; then
+  echo "You must be root to uninstall bashshot."
+  sudo -u "root" -H $0 "$@"; exit;
 fi
 
 # Removes bashShot from crontab
 rm -f /etc/cron.d/bashshot
 
 # Removes scripts
-rm -f /usr/bin/bashshot.bash
-rm -f /usr/bin/bashshot_cleaner.bash
+rm -f /usr/local/bin/bashshot
+rm -f /usr/local/bin/bashshot-cleaner
 
 if [[ $1 == purge ]]
 then
 	# Removes configuration
-	rm -rf /etc/bashshot
+	rm -rf /usr/local/etc/bashshot
 fi
 
 # Removes file for log rotation

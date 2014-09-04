@@ -4,7 +4,8 @@
 set -e
 
 # Variables
-configFolder="/etc/bashshot"
+configFolder="/usr/local/etc/bashshot"
+binaryFolder="/usr/local/bin"
 cronTabFolder="/etc/cron.d"
 
 # Change to the folder where the source code is located
@@ -20,9 +21,9 @@ fi
 #---------------------------------------------------------
 
 # Installing scripts
-cp $sourceFolder/bashshot.bash /usr/bin/
-cp $sourceFolder/bashshot_cleaner.bash /usr/bin/
-cp $sourceFolder/array /usr/bin/
+cp $sourceFolder/bashshot.bash $binaryFolder/bashshot
+cp $sourceFolder/bashshot-cleaner.bash $binaryFolder/bashshot-cleaner
+cp $sourceFolder/array $binaryFolder/
 
 #---------------------------------------------------------
 

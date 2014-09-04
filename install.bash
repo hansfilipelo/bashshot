@@ -3,6 +3,18 @@
 # If something fails - exit
 set -e
 
+# Check for zfs
+if ! which zfs 1>/dev/null; then
+  echo "ZFS not installed!"
+  exit 1;
+fi
+
+# Check for cron
+if ! which cron 1>/dev/null; then
+  echo "cron not installed!"
+  exit 1;
+fi
+
 # Directories.
 # Note that the bashshot script has to be modified accordingly if you change configFolder.
 configFolder="/usr/local/etc/bashshot"

@@ -3,8 +3,10 @@
 # If something fails - exit
 set -e
 
-# Variables
+# Directories.
+# Note that the bashshot script has to be modified accordingly if you change configFolder.
 configFolder="/usr/local/etc/bashshot"
+# Note that the crontab must be modified accordingly if you change binaryFolder.
 binaryFolder="/usr/local/bin"
 cronTabFolder="/etc/cron.d"
 

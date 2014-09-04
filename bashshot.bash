@@ -13,7 +13,7 @@ cd "$( dirname "$0" )"
 ZFS=/sbin/zfs
 
 # Gets date and filesystems (FS) from config file
-. /etc/bashshot/bashshot.conf
+. /usr/local/etc/bashshot/bashshot.conf
 date=$(date '+%Y-%m-%d_%H:%M')
 logPath=/var/log/bashshot.log
 

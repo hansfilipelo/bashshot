@@ -1,136 +1,119 @@
 #!/bin/bash
 
 # Creates temporary files
-TMP=/tmp/snapshot_cleanerlog_tmp.txt
-touch $TMP
-exec >> $TMP 2>&1
-SNAPSHOTS=/tmp/snapshots_tmp.txt
-touch $SNAPSHOTS
-
-# Path to ZFS
-ZFS=/sbin/zfs
+tempLog=/tmp/snapshot_cleanerlog_tmp.txt
+touch $tempLog
+exec >> $tempLog 2>&1
+snapshots=/tmp/snapshots_tmp.txt
+touch $snapshots
 
 echo ""
-echo "Written by bashshot_cleaner.sh"
+echo "Written by bashshot-cleaner"
 echo "-----------------------------"
 date "+%Y-%m-%d %H:%M"
 
 # cd to script dir
-DIR=$( cd "$( dirname "$0" )" && pwd )
-cd $DIR
+cd dirname "$0"
 
 # Put log /var/log/
-LOG=/var/log/bashshot.log
-touch $LOG
+log=/var/log/bashshot-cleaner.log
+touch $log
 
 # Sets scripts period
-if [ $1 == "frequently" -o $1 == "hourly" -o $1 == "daily" -o $1 == "weekly" -o $1 == "monthly" ]
-then
-        PERIOD=$1
+if [[ $1 == "frequently" || $1 == "hourly" || $1 == "daily" || $1 == "weekly" || $1 == "monthly" ]]; then
+  period=$1
 else
-        echo ""
-        echo "Usage:"
-        echo "  $0 <frequently|hourly|daily|weekly|monthly|>"
-        echo ""
-        # Outputs TEMP to LOG
-        cat $TMP >> $LOG
-        rm $TMP
-	rm $SNAPSHOTS
-        exit
+  echo ""
+  echo "Usage:"
+  echo "  $0 (frequent|hourly|daily|weekly|monthly|)"
+  echo ""
+  # Outputs tempLog to log
+  cat $tempLog >> $log
+  rm $tempLog
+  rm $snapshots
+  exit
 fi
 
-# Gets date
-DATE=$(date +%Y%m%d%H%M)
+date=$(date +%Y%m%d%H%M)
 
 # Sets timediff depending on what interval of snapshots to clean
-if [ $PERIOD == frequently ]
-then
-	# We keep frequently snapshots for an hour
-	if [ $(date +%H) == 00 ]
-	then
-		TIMEDIFF=7700
-	else
-		TIMEDIFF=100
-	fi
+if [[ $period == frequent ]]; then
+  # We keep frequently snapshots for an hour
+  if [[ $(date +%H) == 00 ]]; then
+    timediff=7700
+  else
+    timediff=100
+  fi
 
-elif [ $PERIOD == hourly ]
-then
-	# We keep hourly snapshots for a day
-	TIMEDIFF=10000
+elif [[ $period == hourly ]]; then
+  # We keep hourly snapshots for a day
+  timediff=10000
 
-elif [ $PERIOD == daily ]
-then
-	# We keep daily snapshots for a week
-	if [ 8 -gt $(date +%d) ]
-	then
-		TIMEDIFF=750000
-	else
-		TIMEDIFF=70000
-	fi
+elif [[ $period == daily ]]; then
+  # We keep daily snapshots for a week
+  if [[ 8 -gt $(date +%d) ]]
+  then
+    timediff=750000
+  else
+    timediff=70000
+  fi
 
-elif [ $PERIOD == weekly ]
-then
-	# We keep weekly snapshots for a month
-	if [ 2 -gt $(date +%m) ]
-	then
-		TIMEDIFF=89700000
-	else
-		TIMEDIFF=1000000
-	fi
+elif [ $period == weekly ]; then
+  # We keep weekly snapshots for a month
+  if [[ 2 -gt $(date +%m) ]]; then
+    timediff=89700000
+  else
+    timediff=1000000
+  fi
 
-elif [ $PERIOD == monthly ]
-then
-	# We keep monthly snapshots for a year
-	TIMEDIFF=100000000
+elif [[ $period == monthly ]]; then
+  # We keep monthly snapshots for a year
+  timediff=100000000
 
 else
-	echo ""
-	echo "Usage:"
-	echo "	bashshot_cleaner.sh <frequently|hourly|daily|weekly|monthly> <log>"
-	echo ""
-	cat $TMP >> $LOG
-	rm $SNAPSHOTS
-	rm $TMP
-	exit
+  echo ""
+  echo "Usage:"
+  echo "	bashshot_cleaner.sh <frequently|hourly|daily|weekly|monthly> <log>"
+  echo ""
+  cat $tempLog >> $log
+  rm $snapshots
+  rm $tempLog
+  exit
 fi
 
 # Lists snapshots taken with same interval as cleaner
-$ZFS list -t snapshot | tail -n+2 | grep @$PERIOD > $SNAPSHOTS
+zfs list -t snapshot | tail -n+2 | grep @$period > $snapshots
 
-while read line
-do
-	# Takes out only name part of snapshot-line
-	SS=$(echo $line | awk '{print $1}')
+while read line; do
+  # Takes out only name part of snapshot-line
+  snapshot=$(echo $line | awk '{print $1}')
 
-	# Takes out only date-part of snapshots in storage
-	SSDATE=$(echo $line | awk '{print $1}' | sed 's/[^0-9]//g')
+  # Takes out only date-part of snapshots in storage
+  snapshotDate=$(echo $line | awk '{print $1}' | sed 's/[^0-9]//g')
 
-	# If todays date minus snapshot date minus TIMEDIFF is >0, then it's to old
-	# Saves daily for 1 week, weekly for a month and monthly for a year
-	DIFF=$(($DATE-$SSDATE-$TIMEDIFF))
-	if [ $DIFF -gt 0 ]
-	then
-		$ZFS destroy $SS
-		if [ $? == 0 ]
-		then
-			echo "$SS destroyed"
-		fi
-	fi
-done < $SNAPSHOTS
+  # If todays date minus snapshot date minus timediff is >0, then it's to old
+  # Saves daily for 1 week, weekly for a month and monthly for a year
+  diff=$(($date-$snapshotDate-$timediff))
+  if [[ $diff -gt 0 ]]; then
+    if zfs destroy $snapshot; then
+      echo "$snapshot destroyed."
+    else
+      echo "Failed to destroy $snapshot"
+    fi
+  fi
+done < $snapshots
 
 # List remaining snapshots
 echo ""
-echo "Remaining $PERIOD snapshots"
-$ZFS list -t snapshot | grep $PERIOD
-
+echo "Remaining $period snapshots"
+zfs list -t snapshot | grep $period
 echo "-----------------------------"
 
 # Write to log once a week and every month
-if [ $PERIOD == "weekly" -o $PERIOD == "monthly" ]
-then
-	cat $TMP >> $LOG
+if [[ $period == "weekly" -o $period == "monthly" ]]; then
+	cat $tempLog >> $log
 fi
 
 # Remove temporary files
-rm $SNAPSHOTS
-rm $TMP
+rm $snapshots
+rm $tempLog

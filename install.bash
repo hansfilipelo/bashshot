@@ -52,7 +52,7 @@ then
   echo "Config files exists, will not overwrite it."
 else
   # Creates config file
-  cp $sourceFolder/default-config $configFolder/bashshot.conf
+  cp $sourceFolder/config $configFolder/bashshot.conf
 fi
 
 #--------------------

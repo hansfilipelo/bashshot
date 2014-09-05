@@ -6,7 +6,7 @@
 
 # Enter filesystems to snapshot as a space separated string, i. e.:
 # filesystems="poolx/fs1 pooly/fs2"
-filesystems=
+filesystems=""
 
 # Choose time period for scripts to snapshot
 # Every 15 minutes - saved for an hour

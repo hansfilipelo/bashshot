@@ -23,7 +23,7 @@ if [[ $frequently == "yes" ]]; then
   period="$period frequently"
 fi
 
-if [[ $hourly == "yes" && $(date '+%M' == "00" ]]; then
+if [[ $hourly == "yes" && $(date '+%M' == "00") ]]; then
   period="$period hourly"
 fi
 

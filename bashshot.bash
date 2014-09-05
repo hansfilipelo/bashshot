@@ -17,44 +17,34 @@ logPath=/var/log/bashshot.log
 # Creates temporary file which will be sent to logfile
 tempLogPath=/tmp/log.txt
 touch $tempLogPath
-if [[ $1 != "DEBUG" ]]
-then
-	exec >> $tempLogPath 2>&1
-fi
 
 # Decide which periods that is to be snapshoted
-if [[ $frequently == "yes" ]]
-then
-	period=$(array "$period" 'frequently')
+if [[ $frequently == "yes" ]]; then
+  period="$period frequently"
 fi
 
-if [[ $hourly == "yes" && $(date '+%M') == "00" ]]
-then
-	period=$(array "$period" 'hourly')
+if [[ $hourly == "yes" && $(date '+%M' == "00" ]]; then
+  period="$period hourly"
 fi
 
-if [[ $daily == "yes" && $(date '+%H:%M') == "00:00" ]]
-then
-	period=$(array "$period" 'daily')
+if [[ $daily == "yes" && $(date '+%H:%M') == "00:00" ]]; then
+  period="$period daily"
 fi
 
-if [[ $weekly == "yes" && $(date '+%u %H:%M') == "7 00:00" ]]
-then
-	period=$(array "$period" 'weekly')
+if [[ $weekly == "yes" && $(date '+%u %H:%M') == "7 00:00" ]]; then
+  period="$period weekly"
 fi
 
-if [[ $monthly == "yes" && $(date '+%d %H:%M') == "01 00:00" ]]
-then
-	period=$(array "$period" 'monthly')
+if [[ $monthly == "yes" && $(date '+%d %H:%M') == "01 00:00" ]]; then
+  period="$period monthly"
 fi
 
 # Writes if debug set
 if [[ $1 == "DEBUG" ]]; then
-	echo "DEBUG: Periods to snapshot"
-	echo "$period" | while IFS= read element
-	do
-		echo "$element"
-	done
+  echo "DEBUG: Periods to snapshot"
+  for element in $period; do
+    echo "$element"
+  done
 fi
 
 # Echos stuff
@@ -64,23 +54,21 @@ echo "-------------------------"
 date "+%Y-%m-%d %H:%M"
 
 #Loops through periods to run
-echo "$period" | while IFS= read time
-do
-	# Loops through FS to snapshot, but skip empty
-	echo "$filesystems" | while IFS= read fs
-	do
-		if [[ -n $time ]]
-		then
-			$ZFS snapshot $fs@"$time"_"$date"
-			# Confirm status to log
-			if (( $? == 0 ))
-			then
-				echo "$time snapshot of $fs taken"
-			else
-				echo "$time SNAPSHOT OF $fs FAILED!"
-			fi
-		fi
-	done
+for time in $period; do
+  # Loops through FS to snapshot, but skip empty
+  for fs in $filesystems;	do
+    if [[ -n $time ]]
+    then
+      $ZFS snapshot $fs@"$time"_"$date"
+      # Confirm status to log
+      if (( $? == 0 ))
+      then
+	echo "$time snapshot of $fs taken"
+      else
+	echo "$time SNAPSHOT OF $fs FAILED!"
+      fi
+    fi
+  done
 done
 
 echo "------------------------"
@@ -88,9 +76,8 @@ echo "------------------------"
 # Appends stuff in tempLogPath/mail to log
 
 # Write to log
-if [[ $1 != "DEBUG"  ]]
-then
-	cat $tempLogPath >> $logPath
+if [[ $1 != "DEBUG"  ]]; then
+  cat $tempLogPath >> $logPath
 fi
 
 #Removes temporary log file

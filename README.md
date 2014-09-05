@@ -40,7 +40,7 @@ Install the software on your system:
 
 Edit /etc/bashshot/bashshot.conf. Set which filesystems to snapshot and the periocity of these snapshots. Example below:
 
-	filesystems=$(array 'pool/filesystem' 'pool/filesystem')
+	filesystems="pool/filesystem pool/filesystem"
 	frequently="no"
 	hourly="no"
 	daily="yes"

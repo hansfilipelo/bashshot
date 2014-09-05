@@ -3,13 +3,9 @@
 # for ZFSonLinux, implemented as a shell script.
 # 		-----------------------
 
-# Gets array, a POSIX compliant array implementation
-# This implementation is created by makefu@github - https://github.com/makefu/array
-. /usr/bin/array
 
-# Enter filesystems to snapshot as a array, i e:
-# 		filesystems='$'(array 'poolX/fsY' 'poolZ/fsW')
-
+# Enter filesystems to snapshot as a space separated string, i. e.:
+# filesystems="poolx/fs1 pooly/fs2"
 filesystems=
 
 # Choose time period for scripts to snapshot

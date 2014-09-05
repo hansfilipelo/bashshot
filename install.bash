@@ -37,7 +37,6 @@ fi
 # Installing scripts
 cp $sourceFolder/bashshot.bash $binaryFolder/bashshot
 cp $sourceFolder/bashshot-cleaner.bash $binaryFolder/bashshot-cleaner
-cp $sourceFolder/array $binaryFolder/
 
 #---------------------------------------------------------
 
@@ -60,7 +59,7 @@ fi
 # Create crontab
 if [[ -f $cronTabFolder/bashshot ]]
 then
-  echo "Crontab files exists, will not overwrite it."
+  echo "Crontab exists, will not overwrite."
 else
   cp $sourceFolder/crontab $cronTabFolder/bashshot
 fi

@@ -2,7 +2,7 @@
 
 # Check if root
 if [[ "$USER" != "root" ]]; then
-  echo "Bashshot must be installed as root."
+  echo "Bashshot must be run as root."
   sudo -u "root" -H $0 "$@"; exit;
 fi
 

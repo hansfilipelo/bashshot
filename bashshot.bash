@@ -19,8 +19,8 @@ tempLogPath=/tmp/log.txt
 touch $tempLogPath
 
 # Decide which periods that is to be snapshoted
-if [[ $frequently == "yes" ]]; then
-  period="$period frequently"
+if [[ $frequent == "yes" ]]; then
+  period="$period frequent"
 fi
 
 if [[ $hourly == "yes" && $(date '+%M' == "00") ]]; then
@@ -59,13 +59,10 @@ for time in $period; do
   for fs in $filesystems;	do
     if [[ -n $time ]]
     then
-      $ZFS snapshot $fs@"$time"_"$date"
-      # Confirm status to log
-      if (( $? == 0 ))
-      then
-	echo "$time snapshot of $fs taken"
+      if zfs snapshot $fs@"$time"_"$date"; then
+	echo "A $time snapshot of $fs taken."
       else
-	echo "$time SNAPSHOT OF $fs FAILED!"
+	echo "A $time SNAPSHOT OF $fs FAILED!"
       fi
     fi
   done

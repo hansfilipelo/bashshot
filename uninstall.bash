@@ -4,8 +4,8 @@ set -e
 
 # Check if the user is root
 if [[ "$USER" != "root" ]]; then
-  echo "You must be root to uninstall bashshot."
-  sudo -u "root" -H $0 "$@"; exit;
+	echo "You must be root to uninstall bashshot."
+	sudo -u "root" -H $0 "$@"; exit;
 fi
 
 # Removes bashShot from crontab

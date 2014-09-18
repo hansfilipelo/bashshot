@@ -5,14 +5,14 @@ set -e
 
 # Check for zfs
 if ! which zfs 1>/dev/null; then
-  echo "ZFS not installed!"
-  exit 1;
+	echo "ZFS not installed!"
+	exit 1;
 fi
 
 # Check for cron
 if ! which cron 1>/dev/null; then
-  echo "cron not installed!"
-  exit 1;
+	echo "cron not installed!"
+	exit 1;
 fi
 
 # Directories.
@@ -28,8 +28,8 @@ cd $sourceFolder
 
 # Check if root
 if [[ "$USER" != "root" ]]; then
-  echo "Bashshot must be installed as root."
-  sudo -u "root" -H $0 "$@"; exit;
+	echo "Bashshot must be installed as root."
+	sudo -u "root" -H $0 "$@"; exit;
 fi
 
 #---------------------------------------------------------
@@ -49,19 +49,19 @@ cp $sourceFolder/logrotate /etc/logrotate.d/bashshot
 mkdir -p $configFolder
 if [[ -f $configFolder/bashshot.conf ]]
 then
-  echo "Config files exists, will not overwrite it."
+	echo "Config files exists, will not overwrite it."
 else
-  # Creates config file
-  cp $sourceFolder/config $configFolder/bashshot.conf
+	# Creates config file
+	cp $sourceFolder/config $configFolder/bashshot.conf
 fi
 
 #--------------------
 # Create crontab
 if [[ -f $cronTabFolder/bashshot ]]
 then
-  echo "Crontab exists, will not overwrite."
+	echo "Crontab exists, will not overwrite."
 else
-  cp $sourceFolder/crontab $cronTabFolder/bashshot
+	cp $sourceFolder/crontab $cronTabFolder/bashshot
 fi
 
 #---------------------------------------------------------

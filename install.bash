@@ -57,12 +57,8 @@ fi
 
 #--------------------
 # Create crontab
-if [[ -f $cronTabFolder/bashshot ]]
-then
-	echo "Crontab exists, will not overwrite."
-else
-	cp $sourceFolder/crontab $cronTabFolder/bashshot
-fi
+cp $sourceFolder/crontab $cronTabFolder/bashshot
+
 
 #---------------------------------------------------------
 # Inform the user that the installation is complete

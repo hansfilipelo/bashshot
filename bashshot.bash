@@ -2,8 +2,8 @@
 
 # Check if root
 if [[ "$USER" != "root" ]]; then
-  echo "Bashshot must be run as root."
-  sudo -u "root" -H $0 "$@"; exit;
+	echo "Bashshot must be run as root."
+	sudo -u "root" -H $0 "$@"; exit;
 fi
 
 # cd to script dir
@@ -25,31 +25,31 @@ fi
 
 # Decide which periods that is to be snapshoted
 if [[ $frequent == "yes" ]]; then
-  period="$period frequent"
+	period="$period frequent"
 fi
 
 if [[ $hourly == "yes" && $(date '+%M' == "00") ]]; then
-  period="$period hourly"
+	period="$period hourly"
 fi
 
 if [[ $daily == "yes" && $(date '+%H:%M') == "00:00" ]]; then
-  period="$period daily"
+	period="$period daily"
 fi
 
 if [[ $weekly == "yes" && $(date '+%u %H:%M') == "7 00:00" ]]; then
-  period="$period weekly"
+	period="$period weekly"
 fi
 
 if [[ $monthly == "yes" && $(date '+%d %H:%M') == "01 00:00" ]]; then
-  period="$period monthly"
+	period="$period monthly"
 fi
 
 # Writes if debug set
 if [[ $1 == "DEBUG" ]]; then
-  echo "DEBUG: Periods to snapshot"
-  for element in $period; do
-    echo "$element"
-  done
+	echo "DEBUG: Periods to snapshot"
+	for element in $period; do
+		echo "$element"
+	done
 fi
 
 # Echos stuff
@@ -60,17 +60,17 @@ date "+%Y-%m-%d %H:%M"
 
 #Loops through periods to run
 for time in $period; do
-  # Loops through FS to snapshot, but skip empty
-  for fs in $filesystems;	do
-    if [[ -n $time ]]
-    then
-      if zfs snapshot $fs@"$time"_"$date"; then
-	echo "A $time snapshot of $fs taken."
-      else
-	echo "A $time SNAPSHOT OF $fs FAILED!"
-      fi
-    fi
-  done
+	# Loops through FS to snapshot, but skip empty
+	for fs in $filesystems;	do
+		if [[ -n $time ]]
+		then
+			if zfs snapshot $fs@"$time"_"$date"; then
+				echo "A $time snapshot of $fs taken."
+			else
+				echo "The taking of a $time snapshot of $fs FAILED!"
+			fi
+		fi
+	done
 done
 
 echo "------------------------"
@@ -78,8 +78,8 @@ echo "------------------------"
 # Appends stuff in tempLogPath/mail to log
 
 # Write to log
-if [[ $1 != "DEBUG"  ]]; then
-  cat $tempLogPath >> $logPath
+if [[ $1 != "DEBUG"	 ]]; then
+	cat $tempLogPath >> $logPath
 fi
 
 #Removes temporary log file

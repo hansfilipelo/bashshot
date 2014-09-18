@@ -55,7 +55,7 @@ fi
 # Echos stuff
 echo ""
 echo "Written by bashshot.sh"
-echo "-------------------------"
+echo "------------------------"
 date "+%Y-%m-%d %H:%M"
 
 #Loops through periods to run

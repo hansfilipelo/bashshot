@@ -18,6 +18,11 @@ logPath=/var/log/bashshot.log
 tempLogPath=/tmp/log.txt
 touch $tempLogPath
 
+# Run this script, but catch all the output and write it to the log.
+if [[ ! $1 == "DEBUG" ]]; then
+	exec >> $tempLogPath 2>&1
+fi
+
 # Decide which periods that is to be snapshoted
 if [[ $frequent == "yes" ]]; then
   period="$period frequent"

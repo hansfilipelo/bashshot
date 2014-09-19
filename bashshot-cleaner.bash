@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Check if root
-if [[ whoami != "root" ]]; then
+if (( $(id -u) != "root" )); then
 	echo "The bashshot cleaner script must be run as root."
-	sudo -u "root" -H $0 "$@"; exit;
+	exit;
 fi
 
 # Creates temporary files

@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Check if root
-if [[ whoami != "root" ]]; then
+if (( $(id -u) != 0 )); then
 	echo "Bashshot must be run as root."
-	sudo -u "root" -H $0 "$@"; exit;
+	exit;
 fi
 
 # cd to script dir

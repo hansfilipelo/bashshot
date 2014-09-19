@@ -1,9 +1,9 @@
 #!/bin/bash -e
 
-cd $(dirname "$0")
+cd "$(dirname $0)"
 
 # Check if root
-if [[ $UID != "0" ]]; then
+if (( $(id -u) != 0 )); then
 	echo "The bashshot cleaner script must be run as root."
 	exit 1
 fi
@@ -61,8 +61,7 @@ elif [[ $period == monthly ]]; then
 fi
 
 # Lists snapshots taken with same interval as cleaner
-zfs list -t snapshot | tail -n+2 | grep @$period | while read line
-do
+zfs list -t snapshot | tail -n+2 | grep @$period | while read line; do
 	# Takes out only name part of snapshot-line
 	snapshot=$(echo $line | awk '{print $1}')
 

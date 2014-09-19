@@ -1,55 +1,34 @@
-#!/bin/bash
+#!/bin/bash -e
 
-# Check if root
+# Check if the user is root
 if (( $(id -u) != 0 )); then
 	echo "Bashshot must be run as root."
-	exit;
+	exit 1;
 fi
 
 # cd to script dir
-cd "$( dirname "$0" )"
+cd "$(dirname $0)"
 
 # Gets date and filesystems (FS) from config file
 . /usr/local/etc/bashshot/bashshot.conf
 date=$(date '+%Y-%m-%d_%H:%M')
 logPath=/var/log/bashshot.log
 
-# Creates temporary file which will be sent to logfile
-tempLogPath=/tmp/log.txt
-touch $tempLogPath
-
-# Run this script, but catch all the output and write it to the log.
-if [[ ! $1 == "DEBUG" ]]; then
-	exec >> $tempLogPath 2>&1
-fi
-
 # Decide which periods that is to be snapshoted
 if [[ $frequent == "yes" ]]; then
 	period="$period frequent"
 fi
-
 if [[ $hourly == "yes" && $(date '+%M' == "00") ]]; then
 	period="$period hourly"
 fi
-
 if [[ $daily == "yes" && $(date '+%H:%M') == "00:00" ]]; then
 	period="$period daily"
 fi
-
 if [[ $weekly == "yes" && $(date '+%u %H:%M') == "7 00:00" ]]; then
 	period="$period weekly"
 fi
-
 if [[ $monthly == "yes" && $(date '+%d %H:%M') == "01 00:00" ]]; then
 	period="$period monthly"
-fi
-
-# Writes if debug set
-if [[ $1 == "DEBUG" ]]; then
-	echo "DEBUG: Periods to snapshot"
-	for element in $period; do
-		echo "$element"
-	done
 fi
 
 # Echos stuff
@@ -74,15 +53,5 @@ for time in $period; do
 done
 
 echo "------------------------"
-
-# Appends stuff in tempLogPath/mail to log
-
-# Write to log
-if [[ $1 != "DEBUG"	 ]]; then
-	cat $tempLogPath >> $logPath
-fi
-
-#Removes temporary log file
-rm $tempLogPath
 
 exit 0;

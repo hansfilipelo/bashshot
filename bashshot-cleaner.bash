@@ -10,7 +10,7 @@ fi
 tempLog=/tmp/snapshot_cleanerlog_tmp.txt
 touch $tempLog
 
-if [[ ! $1 == "DEBUG" ]]; then
+if [[ ! $2 == "DEBUG" ]]; then
 	exec >> $tempLog 2>&1
 fi
 snapshots=/tmp/snapshots_tmp.txt

@@ -119,7 +119,7 @@ zfs list -t snapshot | grep $period
 echo "-----------------------------"
 
 # Write to log once a week and every month
-if [[ $period == "weekly" -o $period == "monthly" ]]; then
+if [[ $period == "weekly" || $period == "monthly" ]]; then
 	cat $tempLog >> $log
 fi
 

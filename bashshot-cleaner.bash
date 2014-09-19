@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if root
+if [[ whoami != "root" ]]; then
+	echo "The bashshot cleaner script must be run as root."
+	sudo -u "root" -H $0 "$@"; exit;
+fi
+
 # Creates temporary files
 tempLog=/tmp/snapshot_cleanerlog_tmp.txt
 touch $tempLog
@@ -23,7 +29,7 @@ log=/var/log/bashshot-cleaner.log
 touch $log
 
 # Sets scripts period
-if [[ $1 == "frequently" || $1 == "hourly" || $1 == "daily" || $1 == "weekly" || $1 == "monthly" ]]; then
+if [[ $1 == "frequent" || $1 == "hourly" || $1 == "daily" || $1 == "weekly" || $1 == "monthly" ]]; then
 	period=$1
 else
 	echo ""
@@ -41,7 +47,7 @@ date=$(date +%Y%m%d%H%M)
 
 # Sets timediff depending on what interval of snapshots to clean
 if [[ $period == frequent ]]; then
-	# We keep frequently snapshots for an hour
+	# We keep frequent snapshots for an hour
 	if [[ $(date +%H) == 00 ]]; then
 		timediff=7700
 	else
@@ -76,7 +82,7 @@ elif [[ $period == monthly ]]; then
 else
 	echo ""
 	echo "Usage:"
-	echo "	bashshot_cleaner.sh <frequently|hourly|daily|weekly|monthly> <log>"
+	echo "	bashshot_cleaner.sh <frequent|hourly|daily|weekly|monthly> <log>"
 	echo ""
 	cat $tempLog >> $log
 	rm $snapshots

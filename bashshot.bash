@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if root
-if [[ "$USER" != "root" ]]; then
+if [[ whoami != "root" ]]; then
 	echo "Bashshot must be run as root."
 	sudo -u "root" -H $0 "$@"; exit;
 fi

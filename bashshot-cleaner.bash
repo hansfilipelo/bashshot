@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if root
-if (( $(id -u) != "root" )); then
+if (( $(id -u) != 0 )); then
 	echo "The bashshot cleaner script must be run as root."
 	exit;
 fi

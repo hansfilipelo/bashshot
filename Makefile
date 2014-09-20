@@ -8,11 +8,11 @@ LOGROTATE_DIR ?= $(ETC_DIR)/logrotate.d
 .PHONY: uninstall install purge
 
 install: bashshot-cleaner bashshot bashshot.conf crontab logrotate bashshot.conf
-	install -d $(CURDIR)/bashshot-cleaner $(BINARY_DIR)/bashshot-cleaner
-	install -d $(CURDIR)/bashshot $(BINARY_DIR)/bashshot
-	install -d -m 644 $(CURDIR)/bashshot.conf $(ETC_DIR)/bashshot.conf
-	install -d -m 644 $(CURDIR)/logrotate $(LOGROTATE_DIR)/bashshot
-	install -d -m 644 $(CURDIR)/crontab $(CRON_DIR)/bashshot
+	install -D $(CURDIR)/bashshot-cleaner $(BINARY_DIR)/bashshot-cleaner
+	install -D $(CURDIR)/bashshot $(BINARY_DIR)/bashshot
+	install -D -m 644 $(CURDIR)/bashshot.conf $(ETC_DIR)/bashshot.conf
+	install -D -m 644 $(CURDIR)/logrotate $(LOGROTATE_DIR)/bashshot
+	install -D -m 644 $(CURDIR)/crontab $(CRON_DIR)/bashshot
 
 uninstall:
 	rm -f $(BINARY_DIR)/bashshot-cleaner

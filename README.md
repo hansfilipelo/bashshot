@@ -5,8 +5,9 @@ Replicates the Solaris sun-auto-snap functionality as shell script with help of 
 
 LICENSE
 =================================
-    bashShot - sun-auto-snap-like implementation for ZFSonLinux using cron
-    Copyright (C) 2014  Hans-Filip Elo, Christian Luckey
+    bashShot - sun-auto-snap-like implementation for ZFSonLinux using
+		cron. Copyright (C) 2014  Hans-Filip Elo, Rovanion Luckey,
+		Christian Svensson.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,11 +37,11 @@ Clone the project and switch to it's folder:
 
 Install the software on your system:
 
-	sudo ./install.bash
+	sudo make install
 
 Edit /etc/bashshot/bashshot.conf. Set which filesystems to snapshot and the periocity of these snapshots. Example below:
 
-	filesystems="pool/filesystem pool/filesystem"
+	filesystems="pool/filesystem pool/filesystem2"
 	frequent="no"
 	hourly="no"
 	daily="yes"
@@ -50,8 +51,8 @@ Edit /etc/bashshot/bashshot.conf. Set which filesystems to snapshot and the peri
 
 UNINSTALL
 =================================
-Simply run uninstall.bash:
+Simply run make uninstall:
 
-	sudo ./uninstall.bash
+	sudo make uninstall
 	# To also remove config
-	sudo ./uninstall.bash purge
+	sudo make purge

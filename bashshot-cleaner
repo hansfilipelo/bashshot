@@ -1,32 +1,12 @@
-#!/bin/bash
+#!/bin/bash -e
+
+cd "$(dirname $0)"
 
 # Check if root
 if (( $(id -u) != 0 )); then
 	echo "The bashshot cleaner script must be run as root."
-	exit;
+	exit 1
 fi
-
-# Creates temporary files
-tempLog=/tmp/snapshot_cleanerlog_tmp.txt
-touch $tempLog
-
-if [[ ! $2 == "DEBUG" ]]; then
-	exec >> $tempLog 2>&1
-fi
-snapshots=/tmp/snapshots_tmp.txt
-touch $snapshots
-
-echo ""
-echo "Written by bashshot-cleaner"
-echo "-----------------------------"
-date "+%Y-%m-%d %H:%M"
-
-# cd to script dir
-cd dirname "$0"
-
-# Put log /var/log/
-log=/var/log/bashshot-cleaner.log
-touch $log
 
 # Sets scripts period
 if [[ $1 == "frequent" || $1 == "hourly" || $1 == "daily" || $1 == "weekly" || $1 == "monthly" ]]; then
@@ -36,14 +16,14 @@ else
 	echo "Usage:"
 	echo "	$0 (frequent|hourly|daily|weekly|monthly|)"
 	echo ""
-	# Outputs tempLog to log
-	cat $tempLog >> $log
-	rm $tempLog
-	rm $snapshots
-	exit
+	exit 1
 fi
 
+echo ""
+echo "Written by bashshot-cleaner"
+echo "-----------------------------"
 date=$(date +%Y%m%d%H%M)
+echo $date
 
 # Sets timediff depending on what interval of snapshots to clean
 if [[ $period == frequent ]]; then
@@ -78,22 +58,10 @@ elif [ $period == weekly ]; then
 elif [[ $period == monthly ]]; then
 	# We keep monthly snapshots for a year
 	timediff=100000000
-
-else
-	echo ""
-	echo "Usage:"
-	echo "	bashshot_cleaner.sh <frequent|hourly|daily|weekly|monthly> <log>"
-	echo ""
-	cat $tempLog >> $log
-	rm $snapshots
-	rm $tempLog
-	exit
 fi
 
 # Lists snapshots taken with same interval as cleaner
-zfs list -t snapshot | tail -n+2 | grep @$period > $snapshots
-
-while read line; do
+zfs list -t snapshot | tail -n+2 | grep @$period | while read line; do
 	# Takes out only name part of snapshot-line
 	snapshot=$(echo $line | awk '{print $1}')
 
@@ -110,19 +78,10 @@ while read line; do
 			echo "Failed to destroy $snapshot"
 		fi
 	fi
-done < $snapshots
+done
 
 # List remaining snapshots
 echo ""
 echo "Remaining $period snapshots"
 zfs list -t snapshot | grep $period
 echo "-----------------------------"
-
-# Write to log once a week and every month
-if [[ $period == "weekly" || $period == "monthly" ]]; then
-	cat $tempLog >> $log
-fi
-
-# Remove temporary files
-rm $snapshots
-rm $tempLog

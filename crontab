@@ -1,8 +1,8 @@
 # Bashshot - Solaris time-slider-like functionality for GNU/Linux implemented in bash
 #minute       hour  day   week  month  user   script
-00,15,30,45   *     *     *     *      root   /usr/local/bin/bashshot                  | logger -t "bashshot"
-01,16,31,46   *     *     *     *      root   /usr/local/bin/bashshot-cleaner frequent | logger -t "bashshot-cleaner frequent"
-02            *     *     *     *      root   /usr/local/bin/bashshot-cleaner hourly   | logger -t "bashshot-cleaner hourly"
-03            03    *     *     *      root   /usr/local/bin/bashshot-cleaner daily    | logger -t "bashshot-cleaner daily"
-03            04    *     *     0      root   /usr/local/bin/bashshot-cleaner weekly   | logger -t "bashshot-cleaner weekly"
-03            05    1     *     *      root   /usr/local/bin/bashshot-cleaner monthly  | logger -t "bashshot-cleaner monthly"
+00,15,30,45   *     *     *     *      root   bashshot                  | logger -t "bashshot"
+01,16,31,46   *     *     *     *      root   bashshot-cleaner frequent | logger -t "bashshot-cleaner frequent"
+02            *     *     *     *      root   bashshot-cleaner hourly   | logger -t "bashshot-cleaner hourly"
+03            03    *     *     *      root   bashshot-cleaner daily    | logger -t "bashshot-cleaner daily"
+03            04    *     *     0      root   bashshot-cleaner weekly   | logger -t "bashshot-cleaner weekly"
+03            05    1     *     *      root   bashshot-cleaner monthly  | logger -t "bashshot-cleaner monthly"

@@ -1,6 +1,6 @@
 PREFIX ?= /
 
-BINARY_DIR ?= /usr/bin/
+BINARY_DIR ?= $(PREFIX)/usr/bin/
 ETC_DIR ?= $(PREFIX)/etc
 CRON_DIR ?= $(ETC_DIR)/cron.d
 LOGROTATE_DIR ?= $(ETC_DIR)/logrotate.d
@@ -12,7 +12,7 @@ install: bashshot-cleaner bashshot bashshot.conf crontab logrotate bashshot.conf
 	install -D $(CURDIR)/bashshot $(BINARY_DIR)/bashshot
 	install -D -m 644 $(CURDIR)/bashshot.conf $(ETC_DIR)/bashshot.conf
 	install -D -m 644 $(CURDIR)/logrotate $(LOGROTATE_DIR)/bashshot
-	install -D -m 644 $(CURDIR)/crontab $(CRON_DIR)/bashshot
+	(echo PATH=/bin:/usr/bin:$(BINARY_DIR); cat crontab) > $(CRON_DIR)/bashshot
 
 uninstall:
 	rm -f $(BINARY_DIR)/bashshot-cleaner

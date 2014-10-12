@@ -1,9 +1,9 @@
-PREFIX ?= /
+PREFIX ?= /usr/local
 
-BINARY_DIR ?= $(PREFIX)/usr/bin/
+BINARY_DIR ?= $(PREFIX)/bin/
 ETC_DIR ?= $(PREFIX)/etc
-CRON_DIR ?= $(ETC_DIR)/cron.d
-LOGROTATE_DIR ?= $(ETC_DIR)/logrotate.d
+CRON_DIR ?= /etc/cron.d
+LOGROTATE_DIR ?= /etc/logrotate.d
 
 .PHONY: uninstall install purge
 

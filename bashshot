@@ -10,7 +10,7 @@ fi
 cd "$(dirname $0)"
 
 # Gets date and filesystems (FS) from config file
-. /usr/local/etc/bashshot/bashshot.conf
+. /usr/local/etc/bashshot.conf
 date=$(date '+%Y-%m-%d_%H:%M')
 logPath=/var/log/bashshot.log
 

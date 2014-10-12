@@ -1,8 +1,0 @@
-/var/log/bashshot.log {
-    missingok
-    notifempty
-    size 30k
-    yearly
-    create 0644 root root
-}
-

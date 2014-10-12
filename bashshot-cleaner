@@ -1,0 +1,87 @@
+#!/bin/bash -e
+
+cd "$(dirname $0)"
+
+# Check if root
+if (( $(id -u) != 0 )); then
+	echo "The bashshot cleaner script must be run as root."
+	exit 1
+fi
+
+# Sets scripts period
+if [[ $1 == "frequent" || $1 == "hourly" || $1 == "daily" || $1 == "weekly" || $1 == "monthly" ]]; then
+	period=$1
+else
+	echo ""
+	echo "Usage:"
+	echo "	$0 (frequent|hourly|daily|weekly|monthly|)"
+	echo ""
+	exit 1
+fi
+
+echo ""
+echo "Written by bashshot-cleaner"
+echo "-----------------------------"
+date=$(date +%Y%m%d%H%M)
+echo $date
+
+# Sets timediff depending on what interval of snapshots to clean
+if [[ $period == frequent ]]; then
+	# We keep frequent snapshots for an hour
+	if [[ $(date +%H) == 00 ]]; then
+		timediff=7700
+	else
+		timediff=100
+	fi
+
+elif [[ $period == hourly ]]; then
+	# We keep hourly snapshots for a day
+	timediff=10000
+
+elif [[ $period == daily ]]; then
+	# We keep daily snapshots for a week
+	if [[ 8 -gt $(date +%d) ]]
+	then
+		timediff=750000
+	else
+		timediff=70000
+	fi
+
+elif [ $period == weekly ]; then
+	# We keep weekly snapshots for a month
+	if [[ 2 -gt $(date +%m) ]]; then
+		timediff=89700000
+	else
+		timediff=1000000
+	fi
+
+elif [[ $period == monthly ]]; then
+	# We keep monthly snapshots for a year
+	timediff=100000000
+fi
+
+# Lists snapshots taken with same interval as cleaner
+zfs list -t snapshot | tail -n+2 | grep @$period | while read line; do
+	# Takes out only name part of snapshot-line
+	snapshot=$(echo $line | awk '{print $1}')
+
+	# Takes out only date-part of snapshots in storage
+	snapshotDate=$(echo $line | awk '{print $1}' | sed 's/[^0-9]//g')
+
+	# If todays date minus snapshot date minus timediff is >0, then it's to old
+	# Saves daily for 1 week, weekly for a month and monthly for a year
+	diff=$(($date-$snapshotDate-$timediff))
+	if [[ $diff -gt 0 ]]; then
+		if zfs destroy $snapshot; then
+			echo "$snapshot destroyed."
+		else
+			echo "Failed to destroy $snapshot"
+		fi
+	fi
+done
+
+# List remaining snapshots
+echo ""
+echo "Remaining $period snapshots"
+zfs list -t snapshot | grep $period
+echo "-----------------------------"

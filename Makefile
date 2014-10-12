@@ -12,7 +12,7 @@ install: bashshot-cleaner bashshot bashshot.conf crontab logrotate bashshot.conf
 	install -D $(CURDIR)/bashshot $(BINARY_DIR)/bashshot
 	install -D -m 644 $(CURDIR)/bashshot.conf $(ETC_DIR)/bashshot.conf
 	install -D -m 644 $(CURDIR)/logrotate $(LOGROTATE_DIR)/bashshot
-	(echo PATH=/bin:/usr/bin:$(BINARY_DIR); cat crontab) > $(CRON_DIR)/bashshot
+	(echo PATH=/bin:/sbin:/usr/bin:$(BINARY_DIR); cat crontab) > $(CRON_DIR)/bashshot
 
 uninstall:
 	rm -f $(BINARY_DIR)/bashshot-cleaner

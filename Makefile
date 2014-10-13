@@ -9,7 +9,7 @@ CRON_DIR ?= /etc/cron.d
 install: bashshot-cleaner bashshot bashshot.conf crontab bashshot.conf
 	install -D $(CURDIR)/bashshot-cleaner $(BINARY_DIR)/bashshot-cleaner
 	install -D $(CURDIR)/bashshot $(BINARY_DIR)/bashshot
-	install -D -m 644 $(CURDIR)/bashshot.conf $(ETC_DIR)/bashshot.conf
+	[ -s $(ETC_DIR)/bashshot.conf ] || install -D -m 644 $(CURDIR)/bashshot.conf $(ETC_DIR)/bashshot.conf
 	(echo PATH=/bin:/sbin:/usr/bin:$(BINARY_DIR); cat crontab) > $(CRON_DIR)/bashshot
 
 uninstall:

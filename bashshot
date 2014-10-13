@@ -18,7 +18,7 @@ logPath=/var/log/bashshot.log
 if [[ $frequent == "yes" ]]; then
 	period="$period frequent"
 fi
-if [[ $hourly == "yes" && $(date '+%M' == "00") ]]; then
+if [[ $hourly == "yes" && $(date '+%M') == "00" ]]; then
 	period="$period hourly"
 fi
 if [[ $daily == "yes" && $(date '+%H:%M') == "00:00" ]]; then

@@ -39,7 +39,11 @@ Install the software on your system:
 
 	sudo make install
 
-Edit /usr/local/etc/bashshot.conf. Set which filesystems to snapshot and the periocity of these snapshots. Example below:
+Edit /usr/local/etc/bashshot.conf: 
+
+	editor /usr/local/etc/bashshot.conf
+
+Set which filesystems to snapshot and the periocity of these snapshots. Example below:
 
 	filesystems="pool/filesystem pool/filesystem2"
 	frequent="no"

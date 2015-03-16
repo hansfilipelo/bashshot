@@ -41,14 +41,15 @@ date "+%Y-%m-%d %H:%M"
 for time in $period; do
 	# Loops through FS to snapshot, but skip empty
 	for fs in $filesystems;	do
-		if [[ -n $time ]]
-		then
+		if [[ -n $time ]]; then
 			if zfs snapshot $fs@"$time"_"$date"; then
 				echo "A $time snapshot of $fs taken."
-				if zfs send -i $(ssh $remote zfs list -t snapshot | grep $period | grep /$fs@ | tail -n 1 | awk {'print $1'}) $fs@"$time"_"$date" | ssh $remote zfs receive $fs; then
-				  echo "Sucessfully sent $time snapshot of $fs to $remote"
-				else
-				  echo "Failed to send $time snapshot of $fs to $remote"
+				if [[ -n $remote ]]; then
+					if zfs send -i $(ssh $remote zfs list -t snapshot | grep $time | grep $fs@ | tail -n 1 | awk {'print $1'}) $fs@"$time"_"$date" | ssh $remote zfs receive $fs; then
+						echo "Sucessfully sent $time snapshot of $fs to $remote"
+					else
+						echo "Failed to send $time snapshot of $fs to $remote"
+					fi
 				fi
 			else
 				echo "The taking of a $time snapshot of $fs FAILED!"

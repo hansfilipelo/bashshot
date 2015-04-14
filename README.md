@@ -52,6 +52,11 @@ Set which filesystems to snapshot and the periocity of these snapshots. Example 
 	weekly="yes"
 	monthly="yes"
 
+BACKUPS
+-------
+Bashshot can also back up every snapshot taken using ZFS send/recieve to a remote host running SSH and an equally or greater sized pool. To enable this feature fill in the remote option in bashshot.conf
+
+    remote="backup.example.com"
 
 UNINSTALL
 =================================

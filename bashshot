@@ -46,9 +46,9 @@ for time in $period; do
 				echo "A $time snapshot of $fs taken."
 				if [[ -n $remote ]]; then
 					if zfs send -i $(ssh $remote zfs list -t snapshot | grep $fs@ | tail -n 1 | awk {'print $1'}) $fs@"$time"_"$date" | ssh $remote zfs receive $fs; then
-						echo "Sucessfully sent $time snapshot of $fs to $remote"
+						echo "Sucessfully sent $time snapshot of $fs to $remote."
 					else
-						echo "Failed to send $time snapshot of $fs to $remote"
+						echo "Failed to send $time snapshot of $fs to $remote as $USER."
 					fi
 				fi
 			else
